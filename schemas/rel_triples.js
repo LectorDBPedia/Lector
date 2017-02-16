@@ -7,6 +7,6 @@ var relTriplesSchema = new schema({
 	object: String
 });
 
-var RelTriple = mongoose.model('rel_triples', relTriplesSchema);
+var relTriple = mongoose.model('relTriple', relTriplesSchema, 'rel_triples');
 
-module.exports = RelTriple;
+module.exports = relTriple;

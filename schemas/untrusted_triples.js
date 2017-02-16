@@ -7,6 +7,6 @@ var untrustedTriplesSchema = new schema({
 	object: String
 });
 
-var untrustedTriple = mongoose.model('untrusted_triples', untrustedTriplesSchema);
+var untrustedTriple = mongoose.model('untrustedTriple', untrustedTriplesSchema, 'untrusted_triples');
 
 module.exports = untrustedTriple;

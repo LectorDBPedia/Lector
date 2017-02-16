@@ -6,6 +6,6 @@ var entityTypesSchema = new schema({
 	type: String
 });
 
-var entityType = mongoose.model('entity_types', entityTypesSchema);
+var entityType = mongoose.model('entityType', entityTypesSchema, 'entity_types');
 
 module.exports = entityType;

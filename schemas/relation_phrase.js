@@ -7,6 +7,6 @@ var relationPhrasesSchema = new schema({
 	count: Number
 });
 
-var relationPhrase = mongoose.model('relation_phrases', relationPhrasesSchema);
+var relationPhrase = mongoose.model('relationPhrase', relationPhrasesSchema, 'relation_phrases');
 
 module.exports = relationPhrase;

@@ -8,6 +8,6 @@ var labeledTriplesSchema = new schema({
 	relation: String
 });
 
-var labeledTriples = mongoose.model('labeled_triples', labeledTriplesSchema);
+var labeledTriple = mongoose.model('labeledTriple', labeledTriplesSchema,'labeled_triples');
 
-module.exports = labeledTriples;
+module.exports = labeledTriple;

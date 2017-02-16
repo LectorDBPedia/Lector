@@ -7,6 +7,6 @@ var unlabeledTriplesSchema = new schema({
 	object: String
 });
 
-var unlabeledTriples = mongoose.model('unlabeled_triples', unlabeledTriplesSchema);
+var unlabeledTriple = mongoose.model('unlabeledTriple', unlabeledTriplesSchema, 'unlabeled_triples');
 
-module.exports = unlabeledTriples;
+module.exports = unlabeledTriple;

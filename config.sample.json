@@ -1,0 +1,7 @@
+{
+	"connection" : {
+		"host" : "localhost",
+		"port" : "",
+		"dbname": "AGIW"
+	}
+}
