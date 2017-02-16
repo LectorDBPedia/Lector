@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
 var relTriplesSchema = new schema({
-	Entity_1: String,
-	Phrase: String,
-	Entity_2: String
+	subject: String,
+	phrase: String,
+	object: String
 });
 
-var RelTriple = mongoose.model('RelTriple', relTriplesSchema, 'RelTriples');
+var RelTriple = mongoose.model('rel_triples', relTriplesSchema);
 
 module.exports = RelTriple;
