@@ -3,6 +3,7 @@ var async = require("async");
 var connection = require('./connection')
 
 var relTriples = require('./schemas/rel_triples');
+var relTriplesNotUniq = require('./schemas/rel_triples_not_uniq')
 var trustedTriples = require('./schemas/trusted_triples')
 var untrustedTriples = require('./schemas/untrusted_triples')
 var entityTypes = require('./schemas/entity_types')
@@ -13,7 +14,7 @@ var labeledTriples = require('./schemas/labeled_triples')
 connection.on('connected', () => {
 
 
-	var stream = relTriples.find({}).stream();
+	var stream = relTriplesNotUniq.find({}).stream();
 	stream.on('data', (doc) => {
 
 		trustedTriples.find({'subject': doc.subject, 'object' : doc.object}, (err, res) =>{
