@@ -17,7 +17,7 @@ connection.on('connected', () => {
 	var stream = relTriplesNotUniq.find({}).stream();
 	stream.on('data', (doc) => {
 
-		trustedTriples.find({'subject': doc.subject, 'object' : doc.object}, (err, res) =>{
+		untrustedTriples.find({'subject': doc.subject, 'object' : doc.object}, (err, res) =>{
 			if (!res.length){
 				unlabeledTriples.create(doc._doc, (err, res) => {}) //loggare in qualche modo
 			} else {
