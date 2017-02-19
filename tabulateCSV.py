@@ -1,8 +1,6 @@
 import csv
 import sys
 
-csvFile = sys.argv[1]
-
 for csvFile in sys.argv[1:]:
 	inFile = open(csvFile, 'rb')
 	outFile = open(csvFile.replace('csv','tsv'), 'w+')
