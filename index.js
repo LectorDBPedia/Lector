@@ -1,5 +1,3 @@
-var async = require("async");
-
 var connection = require('./connection')
 
 var relTriples = require('./schemas/rel_triples');
