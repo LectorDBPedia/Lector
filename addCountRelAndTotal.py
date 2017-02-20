@@ -5,6 +5,7 @@ with open(sys.argv[1], "rb") as f:
 	reader = csv.reader(f, delimiter="\t")
 	phrases = {}
 	relations = {}
+	phrasesCount = {}
 	for row in reader:
 		rel = row[1].split('/')[-1]
 		phr = row[0]
@@ -14,13 +15,15 @@ with open(sys.argv[1], "rb") as f:
 			relations[rel] = int(row[2])
 		if phr in phrases:
 			phrases[phr] = phrases[phr] + 1
+			phrasesCount[phr] = phrasesCount[phr] + int(row[2])
 		else:
 			phrases[phr] = 1
+			phrasesCount[phr] = int(row[2])
 
 with open(sys.argv[1], "rb") as f:
 	reader = csv.reader(f, delimiter="\t")
 	for row in reader:
 		phrase = row[0]
 		rel = row[1].split('/')[-1]
-		print '\t'.join([phrase, rel, row[2], str(phrases[phrase]), str(relations[rel])]) 
+		print '\t'.join([phrase, rel, row[2], str(phrases[phrase]), str(relations[rel]), str(phrasesCount[phrase])]) 
 
