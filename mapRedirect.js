@@ -11,8 +11,8 @@ connection.on('connected', () => {
 	stream.on('data', triple => {
 		redirect.find( { $or: [{'redirect': triple.subject},{'redirect': triple.object}]}, (err, results) => { 
 
-				const subred = results.filter(a => a.subject === triple.subred)[0];
-				const objred = results.filter(a => a.objred === triple.objred)[0];
+				const subred = results.filter(a => a.redirect === triple.subject)[0];
+				const objred = results.filter(a => a.redirect === triple.object)[0];
 				
 				if(subred && objred){
 					newRelTriple.create({'subject': subred.wiki_id, 'phrase': triple.phrase, 'object': objred.wiki_id},()=>{})
@@ -27,4 +27,10 @@ connection.on('connected', () => {
 				}
 		})
 	})
+
+	stream.on('close', () => { 
+			console.log('task completed, or error')
+	})
 })
+
+
