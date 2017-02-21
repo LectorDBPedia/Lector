@@ -8,16 +8,18 @@ var entityTypes = require('./schemas/entity_types')
 var relationPhrases = require('./schemas/relation_phrase');
 var unlabeledTriples = require('./schemas/unlabeled_triples')
 var labeledTriples = require('./schemas/labeled_triples')
+var newRelTriple = require('./schemas/new_rel_triples')
+
 
 connection.on('connected', () => {
 
 
-	var stream = relTriplesNotUniq.find({}).stream();
+	var stream = newRelTriple.find({}).stream();
 	stream.on('data', (doc) => {
 
 		untrustedTriples.find({'subject': doc.subject, 'object' : doc.object}, (err, res) =>{
 			if (!res.length){
-				unlabeledTriples.create(doc._doc, (err, res) => {}) //loggare in qualche modo
+				unlabeledTriples.create(doc._doc, (err, res) => {})
 			} else {
 				const entriesPromises = Promise.all([res.map((r) => {
 					return Promise.all([
@@ -36,8 +38,6 @@ connection.on('connected', () => {
 	})
 
 	stream.on('close', () => {
-		connection.close( () => { 
-			console.log('connection closed, task completed, or error')
-		})
+		console.log("stream terminated")
 	})
 })
