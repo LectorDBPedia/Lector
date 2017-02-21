@@ -56,7 +56,7 @@ In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. 
 \section{APPROCCIO}
 
 Il dataset iniziale di frasi, come detto precedentemente, ci è stato fornito con le entità etichettate. Inizialmente abbiamo provato ad applicare un approccio euristico per il riconoscimento di frasi di tipo lista, basato su un lavoro precedentemente svolto da alcuni colleghi, che si è rivelato non scalabile. Si è quindi preferito perdere parte dell'informazione in esse presente favorendo la velocità, data la grande mole di dati.
-Il procedimenti si svolge quindi in diversi passaggi:
+Il procedimenti si svolge in diversi passaggi:
 \begin{enumerate}\item Verifica della relazionalità della frase in questione;
 \item Etichettatura delle triple "presenti" e "non presenti";
 \item Scoring delle frasi;
@@ -86,5 +86,8 @@ In questo modo una frase ottiene un punteggio maggiore quanto più compare assoc
 
 \subsection{Estrazione dell'informazione}
 
+Nella parte finale prendiamo le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto per ogni relazione e le utilizziamo con le entità che mettono in relazione nelle triple per estrarre fatti. La frase per essere valida deve essere presente per la relazione in questione su DBpedia, ed inoltre, ogni tripla, per essere considerata valida, deve rispettare i tipi che la relazione collega su DBpedia. Ad esempio, la frase "\textit{was born in}" è valida per la relazione \textit{birthPlace} se la prima entità è del tipo "Person" e la seconda del tipo "Location".
+
+\section{VALUTAZIONE}
 
 \end{document}
