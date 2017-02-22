@@ -1,17 +1,17 @@
-kills	child	Cain_and_Abel	Cain_and_Abel	253555
-was the father of	child	Evald_Mikson	Jóhannes_Eðvaldsson	252978
-whose son	child	Ethel_Lavenu	Tyrone_Power	253494
-kills	child	Spectre_(comics)	Doctor_Fate	253623
-was the father of	child	Larry_Gilbert_(baseball)	Charlie_Gilbert	253215
-was the father of	child	Frederick_Cornwallis,_1st_Baron_Cornwallis	Charles_Cornwallis,_2nd_Baron_Cornwallis	253002
-whose son	child	Alexander_Nevsky	Daniel_of_Moscow	253476
-was the father of	child	Pope_Hormisdas	Pope_Silverius	253298
-kills	child	Marv_(Sin_City)	Kevin_(Sin_City)	253596
-was the father of	child	Oscar_Torp	Reidar_Torp	253277
-was the father of	child	Benjamin_Caesar	Julius_Caesar_(cricketer)	252877
-was the father of	child	Henrik_Rytter	Olav_Rytter	253073
-was the father of	child	Auguste_Walras	Léon_Walras	252868
-was the father of	child	Augustin_Cranach	Lucas_Cranach_the_Younger	252869
+kills	child	Cain_and_Abel	Cain_and_Abel	253555	F
+was the father of	child	Evald_Mikson	Jóhannes_Eðvaldsson	252978	T
+whose son	child	Ethel_Lavenu	Tyrone_Power	253494	F
+kills	child	Spectre_(comics)	Doctor_Fate	253623	F
+was the father of	child	Larry_Gilbert_(baseball)	Charlie_Gilbert	253215	T
+was the father of	child	Frederick_Cornwallis,_1st_Baron_Cornwallis	Charles_Cornwallis,_2nd_Baron_Cornwallis	253002	T
+whose son	child	Alexander_Nevsky	Daniel_of_Moscow	253476	T
+was the father of	child	Pope_Hormisdas	Pope_Silverius	253298	T
+kills	child	Marv_(Sin_City)	Kevin_(Sin_City)	253596	F
+was the father of	child	Oscar_Torp	Reidar_Torp	253277	T
+was the father of	child	Benjamin_Caesar	Julius_Caesar_(cricketer)	252877	T
+was the father of	child	Henrik_Rytter	Olav_Rytter	253073	T
+was the father of	child	Auguste_Walras	Léon_Walras	252868	T
+was the father of	child	Augustin_Cranach	Lucas_Cranach_the_Younger	252869	F
 was the father of	child	Otto_I,_Holy_Roman_Emperor	Otto_I,_Holy_Roman_Emperor	253279
 was the father of	child	Constantin_von_Wurzbach	Alfred_von_Wurzbach	252918
 was the father of	child	Georg_Beseler	Hans_Hartwig_von_Beseler	253014

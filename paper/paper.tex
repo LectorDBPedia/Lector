@@ -14,7 +14,7 @@
 		
 \section*{RIASSUNTO}
 		
-Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazione contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte delle relazioni estraibili, tuttavia la rilevazione di esse risulta più problematica trovandosi all'interno di linguaggio naturale e non ben evidenziato come accade nelle infoboxes. In questo lavoro si cerca di quantificare il numero di nuovi fatti estratti da questi articoli con il supporto di un KG già popolato per aumentarne la conoscenza. In particolare, la nostra valutazione è stata effettuata utilizzando DBpedia, un KG gratuito, che ci ha portato a... (discuss to be implemented, un paio di numeri sui risultati che poi verranno discussi meglio)
+Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazione contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte delle relazioni estraibili, tuttavia la rilevazione di esse risulta più problematica trovandosi all'interno di linguaggio naturale e non ben evidenziato come accade nelle infoboxes. In questo lavoro si cerca di quantificare il numero e la precisione di nuovi fatti estratti da questi articoli con il supporto di un KG già popolato per aumentarne la conoscenza. In particolare, la nostra valutazione è stata effettuata utilizzando DBpedia, un KG gratuito, che ci ha portato a... (discuss to be implemented, un paio di numeri sui risultati che poi verranno discussi meglio)
 
 \section{INTRODUZIONE} 
 
@@ -33,7 +33,7 @@ Il nostro approccio al problema considera pattern del tipo
 In questo articolo descriviamo l'approccio di estrazione di conoscenza da testo libero di Wikipedia, e i risultati in termini di aumento dei fatti presenti in DBpedia, che usiamo per verificare l'effettiva validità della frase per esprimere una determinata relazione.
 Per l'estrazione abbiamo generato dal dump in input triple candidate a rappresentare informazione valida, verificando se la frase della tripla sia o meno relazionale e confrontandole con il KG per estrarre nuovi fatti.
 (discuss sommaria spiegazione del processo e qualche numero di risultati)
-Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta il nostro approccio; nel Capitolo 4 vengono mostrati i nostri risultati; nel Capitolo 5 si trovano cenni a lavori correlati e su cui ci siamo basati (discuss se vogliamo scriverci qualche cagata su Lector da cui siamo partiti); infine, nel Capitolo 6 vengono presentate le conclusioni sul lavoro effettuato.
+Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta il nostro approccio; nel Capitolo 4 vengono mostrati i nostri risultati; nel Capitolo 5 si trovano cenni a lavori correlati e su cui ci siamo basati (discuss se vogliamo scriverci qualche cagata su Lector da cui siamo partiti); infine, nel Capitolo 6 vengono presentate le conclusioni sul lavoro effettuato ed eventuali sviluppi futuri.
 
 \section{RISORSE}
 \subsection*{\textit{Wikipedia.}}
@@ -60,8 +60,9 @@ dove "Name" è preso dall'URL del relativo articolo di Wikipedia, che ha la form
 \bigbreak
 \textbf{http://en.wikipedia.org/wiki/Name}.
 \bigbreak
-In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi ed in particolare quelli che abbiamo preso in considerazione per il progetto sono due (discuss sono davvero solo 2?):
-\begin{itemize}\item quello relativo ai tipi delle entità, ovvero una serie di coppie "URL entità - URL tipo", che associa ad esempio all'entità "Barack Obama" il tipo "Persona";\item un dataset relativo agli schema e ai collegamenti tra entità e relazioni utilizzati da DBpedia che analizzeremo in seguito\end{itemize}
+In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi e dati accessori presenti in DBpedia, in particolare:
+\begin{itemize}\item dati accessori relativi ai tipi delle entità, ovvero una serie di coppie "URL entità - URL tipo", che associa ad esempio all'entità "Barack Obama" il tipo "Persona";\item dati accessori relativi agli schemi, contenenti informazioni riguardo dominio e codominio di una relazione, oltre a dati sui tipi e supertipi delle entità utilizzati da DBpedia che analizzeremo in seguito;
+\item due dataset rappresentanti ognuno un KG, il primo costruito a partire da fonti più affidabili del secondo. Il secondo è stato utilizzato per filtrare i fatti estratti a partire dal primo.\end{itemize}
 
 \section{APPROCCIO}
 
@@ -75,35 +76,34 @@ Il processamento si svolge in diversi passaggi:
 \subsection{Verifica delle frasi}
 Il dump iniziale delle frasi ci è stato fornito dal professore con le entità delimitate da parentesi quadre e arricchite con l'id relativo su \textit{Freebase}, superfluo per questo lavoro. Il dato all'interno di esse ci fornisce il \textit{wikid} che ci è stato utile per reperire l'entità anche su DBpedia, che usa proprio questi identificatori per salvarle, poiché basato proprio su Wikipedia. In alcuni casi questi identificatori fanno riferimento ad un \textit{redirect} che punta all'effettivo wikid che abbiamo reperito tramite una mappatura offerta da un altro file di input fornito dal docente.
 
-Abbiamo quindi suddiviso le frasi iniziali in una lista di triple comprendenti tutte le coppie di entità e il testo compreso tra esse, perdendo parte dell'informazione presente ad esempio in frasi di tipo lista nelle quali il soggetto andrebbe collegato con le varie entità in relazione con esso utilizzando il pezzo di frase che lo collega con la prima entità. 
+Abbiamo quindi suddiviso le frasi iniziali in una lista di triple comprendenti tutte le coppie di entità e il testo compreso tra esse, perdendo parte dell'informazione presente ad esempio in frasi di tipo lista nelle quali il soggetto andrebbe collegato con le varie entità in relazione con esso utilizzando il pezzo di frase che lo collega con la prima entità.
 \begin{figure}[h]
-	\includegraphics[width=7.8cm, height=1.2cm]{stanford}
+	\includegraphics[width=7.7cm, height=1.2cm]{stanford}
 	\caption{Esempio di una frase di tipo lista}
 \end{figure}
- (discuss eventuale immagine di stanford?).
 
-Le frasi tra le entità sono state quindi passate ad un filtro per trovare quelle di tipo relazionale. Questa operazione snellisce di molto il dataset iniziale eliminando la maggior parte degli spezzoni di testo tra entità poiché il filtro è molto restrittivo, garantendo dall'altra parte un output di frasi che quasi sicuramente esprime una relazione tra due entità.
+Le frasi tra le entità sono state quindi passate ad un filtro per trovare quelle relazionali. Questa operazione snellisce di molto la quantità di triple estratte dalle frasi iniziali eliminando la maggior parte degli spezzoni di testo tra entità poiché il filtro è molto restrittivo, garantendo in output delle frasi che quasi sicuramente esprimono una relazione tra due entità.
 
 \subsection{Etichettatura}
-A questo punto, abbiamo considerato le entità di ogni tripla per verificarne l'effettiva presenza all'interno di DBpedia.
+A questo punto, abbiamo considerato le entità di ogni tripla per verificarne l'effettiva presenza all'interno del grafo di DBpedia, sia in quello fidato che in quello non fidato.
 
-Le triple "etichettate" rappresentano fatti già presenti nel KG e sono utili per ricavare una mappatura tra le frasi che legano le entità e le relazioni ad esse accomunabili.
+Le triple cosiddette "etichettate" rappresentano fatti già presenti nel KG e sono utili per ricavare una mappatura tra le frasi che legano le entità e le relazioni ad esse accomunabili.
 
-Quelle non etichettate sono invece candidate a rappresentare quella parte di conoscenza che il nostro lavoro va a reperire in più, ampliando l'informazione della base di conoscenza.
+Quelle "non etichettate" sono invece candidate a rappresentare quella parte di conoscenza in più che il nostro lavoro tenta di estrarre, ampliando l'informazione della base di conoscenza.
 
-Le frasi hanno subito uno \textit{stemming} per pulire le frasi e ricondurre quelle più particolari a forme più generali in modo da non perdere informazione.
+Le frasi hanno subito una elaborazione molto leggera per pulire le frasi e ricondurre quelle più particolari a forme più generali in modo da non perdere informazione (e.g.: \textit{was born in} e \textit{was Born in} sono state assimilate alla stessa frase)
 
 \subsection{Scoring}
 
-Ogni frase di quelle non etichettate è associata ad una o più relazioni provenienti da DBpedia, ma ovviamente queste corrispondenze potrebbero essere non veritiere. Abbiamo quindi assegnato ad ogni frase un punteggio per l'appartenenza o meno ad una relazione considerando il numero di volte che esse sono associate. In questo modo abbiamo cercato di penalizzare frasi che esprimono concetti molto generici poiché non danno molta fiducia sulla correttezza dell'associazione.
+Ogni frase è associata ad una o più relazioni definite da DBpedia, ma ovviamente queste corrispondenze potrebbero non rispettare l'effettiva semantica delle frasi stesse. (discuss da rivedere) Abbiamo quindi assegnato ad ogni frase un punteggio per definire l'appartenenza o meno ad una relazione considerando principalmente il numero di volte che esse sono associate con la relazione in esame. In questo modo abbiamo cercato di penalizzare frasi che esprimono concetti molto generici, ovvero che compaiono in molte relazioni, poiché non danno molta fiducia sulla correttezza dell'associazione.
 
-Il punteggio viene assegnato tenendo conto del numero di volte che la frase è collegata alla determinata relazione ( $c(p,r_i)$ ), al conteggio totale delle sue occorrenze in tutte le relazioni ( $\sum_{j \in R} c(p,r_j)$ ) e al numero di relazioni a cui è associata ( $c(R|p)$ ) secondo la seguente formula: (suddividere la formula con la parte centrale raccolta nella probabilità)
+Il punteggio viene assegnato tenendo conto del numero di volte che la frase è collegata alla determinata relazione ( $c(p,r_i)$ ), del conteggio totale delle sue occorrenze in tutte le relazioni ( $\sum_{j \in R} c(p,r_j)$ ) e del numero di relazioni a cui è associata ( $c(R|p)$ ) secondo la seguente formula: (discuss suddividere la formula con la parte centrale raccolta nella probabilità)
 \[score(p,r_i)=c(p,r_i)\cdot\frac{c(p,r_i)}{\sum_{j \in R}c(p,r_j)}\cdot \frac{1}{c(R|p)} \]
-In questo modo una frase ottiene un punteggio maggiore quanto più compare associata alla relazione in questione rispetto al numero totale di occorrenze, penalizzando le frasi in base al numero di relazioni a cui sono associate, poiché si tratta di forme con molta generalità e utilizzate per esprimere un grande insieme di relazioni diverse. 
+In questo modo una frase otterrà un punteggio maggiore quanto più compare associata alla relazione in questione rispetto al numero totale di occorrenze, penalizzando inoltre le frasi in base al numero di relazioni a cui sono associate, poiché si tratta di forme con molta generalità e utilizzate per esprimere un grande insieme di relazioni diverse. Questo score può penalizzare (discuss ci sono frasi che non esistono, generalità di frasi tipo "is a")
 
 \subsection{Estrazione dell'informazione}
 
-Nella parte finale prendiamo le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto per ogni relazione e le utilizziamo con le entità che mettono in relazione nelle triple per estrarre fatti. La frase per essere valida deve essere presente per la relazione in questione su DBpedia, ed inoltre, ogni tripla, per essere considerata valida, deve rispettare i tipi che la relazione collega su DBpedia. Ad esempio, la frase "\textit{was born in}" è valida per la relazione \textit{birthPlace} se la prima entità è del tipo "Person" e la seconda del tipo "Location".
+Nella parte finale prendiamo le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto per ogni relazione e le utilizziamo per estrarre fatti. (discuss gab descrive K) Ogni tripla inoltre per essere considerata valida, deve rispettare i vincoli che la relazione impone su DBpedia per soggetto e oggetto. Ad esempio, la frase "\textit{was born in}" è valida per la relazione \textit{birthPlace} se la prima entità è del tipo "Person" e la seconda del tipo "Place".
 
 \section{VALUTAZIONE}
 
