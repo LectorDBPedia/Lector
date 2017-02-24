@@ -410,59 +410,59 @@ ibn	parent	Isma'il_ibn_Jafar	Ja'far_al-Sadiq	704463	T
 was the eldest son of	parent	Charles_Tertius_Mander	Charles_Tertius_Mander	699645	F
 was the eldest son of	parent	Lawrence_Washington_(1718–1752)	John_Washington	699979	F
 was the son of	parent	Henry_Richards_Luard	Henry_Richards_Luard	702106	F
-was the eldest daughter of	parent	Elisabeth_of_Brandenburg,_Duchess_of_Brzeg-Legnica_and_Cieszyn	Frederick_I,_Elector_of_Brandenburg	699004
-was the son of	parent	Sambrooke_Freeman	Sambrooke_Freeman	703571
-was the son of	parent	Arthur_Ingram	Arthur_Ingram	701001
-was the son of	parent	David_Fraser_(British_Army_officer)	William_Fraser_(British_Army_officer)	701392
-was the son of	parent	George_Weir	George_Weir	701902
-was the son of	parent	Edward_Thompson_(1697–1742)	Edward_Thompson_(1697–1742)	701544
-was the eldest son of	parent	Alexander_Edward	Robert_Sibbald	699572
-was the eldest son of	parent	David_Jones_(Carmarthenshire_MP)	John_Jones_(Carmarthenshire_MP)	699664
-was the son of	parent	Thomas_Overbury	Sir_Thomas_Monson,_1st_Baronet	703913
-was the daughter of	parent	Mary_Stockdale	John_Stockdale	700653
-was the second son of	parent	Stephen_Lushington_(judge)	Sir_Stephen_Lushington,_1st_Baronet	699482
-was the eldest son of	parent	Antoine_Juchereau_Duchesnay_(seigneur)	Antoine_Juchereau_Duchesnay_(seigneur)	699588
-was the eldest son of	parent	Charles_Thomas_Mills	Charles_Mills,_2nd_Baron_Hillingdon	699646
-was the son of	parent	Arthur_John_Moore	Charles_Moore_(Irish_MP)	701002
-was the son of	parent	Edward_John_Hutchins	Edward_John_Hutchins	701520
-was a son of	parent	Henry_de_Baliol	Eustace_de_Balliol	704650
-was the son of	parent	Marco_Torlonia,_6th_Prince_of_Civitella-Cesi	Alessandro_Torlonia,_5th_Prince_of_Civitella-Cesi	702967
-was the son of	parent	Henry_Baigent	Edward_Baigent	702027
-was the son of	parent	Pola_Gauguin	Paul_Gauguin	703279
-was the son of	parent	John_Mayhew_(Conservative_politician)	Horace_Mayhew	702625
-was the third son of	parent	Lord_Edward_Cavendish	William_Cavendish,_7th_Duke_of_Devonshire	705071
-is a daughter of	parent	Charles_Perkins_(Aboriginal_activist)	Charles_Perkins_(Aboriginal_activist)	704388
-was the son of	parent	George_Wilson_(reformer)	John_Dalton	701905
-was the son of	parent	Frederick_Hale_(US_senator)	Eugene_Hale	701744
-was the son of	parent	Muhammad_II_ibn_al-Husayn	Al-Husayn_II_ibn_Mahmud	703071
-was the son of	parent	Francisco_Lopez_Caro	Francisco_Lopez_Caro	701708
-ibn	parent	Tahir_ibn_Husayn	Ali_al-Ridha	704503
-was the son of	parent	Loukas_Kanakaris-Roufos	Athanasios_Kanakaris-Roufos	702923
-was daughter of	parent	Agatha,_wife_of_Edward_the_Exile	Gavril_Radomir_of_Bulgaria	700344
-was the eldest son of	parent	Sir_Pierce_Butler,_4th_Baronet	Sir_Thomas_Butler,_3rd_Baronet	700166
-was the second son of	parent	William_of_Aumelas	William_V_of_Montpellier	699550
-was the son of	parent	Francisco_Diaz-Silveira_Lopez	Francisco_Díaz-Silveira	701706
-was the son of	parent	James_Paterson_(journalist)	James_Paterson_(journalist)	702328
-was a son of	parent	Vladimir_Olgerdovich	Algirdas	704814
-was the third daughter of	parent	Joan_Stewart,_Countess_of_Morton	James_I_of_Scotland	700371
-was the son of	parent	Francesco_Cornaro_(Doge)	Giovanni_I_Cornaro	701660
-was the eldest son of	parent	Walter_Spencer-Stanhope_(1827–1911)	John_Roddam_Spencer_Stanhope	700257
-was daughter of	parent	Agatha,_wife_of_Edward_the_Exile	Mieszko_II_Lambert	700346
-was the son of	parent	Rowland_Eustace,_2nd_Viscount_Baltinglass	Thomas_Eustace,_1st_Viscount_Baltinglass	703542
-was the son of	parent	Alexander_von_Bournonville	Alexander_von_Bournonville	700867
-was the son of	parent	John_Henniker,_1st_Baron_Henniker	John_Henniker,_1st_Baron_Henniker	702571
-was the son of	parent	Henri-Auguste_de_Loménie,_comte_de_Brienne	Antoine_de_Loménie	702016
-was the son of	parent	Sextus_Cocceius_Vibianus	Sextus_Cocceius_Severianus	703618
-was the son of	parent	William_Angerstein	John_Angerstein_(MP)	704106
-was a son of	parent	Nicholas_Crispo,_Lord_of_Syros	Francesco_I_Crispo	704725
-was the son of	parent	John_V,_Duke_of_Mecklenburg	Albert,_King_of_Sweden	702698
-was the son of	parent	Ralph_d'Escures	Seffrid_I	703320
-was the son of	parent	Thomas_Jervoise_(1616–1693)	Thomas_Jervoise_(1616–1693)	703891
-was the daughter of	parent	Gertrude_Emerson_Sen	Alfred_E._Emerson	700526
-was the son of	parent	George_Claude_Lockhart	George_William_Lockhart	701819
-was the second son of	parent	Henry_Thomson_(Irish_politician)	Henry_Thomson_(Irish_politician)	699237
-was the son of	parent	Robert_Oxenbridge_(died_1616)	Robert_Oxenbridge_(died_1638)	703486
-was the son of	parent	Dudley_Beaumont	William_Spencer_Beaumont	701444 STOP 
+was the eldest daughter of	parent	Elisabeth_of_Brandenburg,_Duchess_of_Brzeg-Legnica_and_Cieszyn	Frederick_I,_Elector_of_Brandenburg	699004	T
+was the son of	parent	Sambrooke_Freeman	Sambrooke_Freeman	703571	F
+was the son of	parent	Arthur_Ingram	Arthur_Ingram	701001	F
+was the son of	parent	David_Fraser_(British_Army_officer)	William_Fraser_(British_Army_officer)	701392	T
+was the son of	parent	George_Weir	George_Weir	701902	T
+was the son of	parent	Edward_Thompson_(1697–1742)	Edward_Thompson_(1697–1742)	701544	F
+was the eldest son of	parent	Alexander_Edward	Robert_Sibbald	699572	F
+was the eldest son of	parent	David_Jones_(Carmarthenshire_MP)	John_Jones_(Carmarthenshire_MP)	699664	T
+was the son of	parent	Thomas_Overbury	Sir_Thomas_Monson,_1st_Baronet	703913	F
+was the daughter of	parent	Mary_Stockdale	John_Stockdale	700653	T
+was the second son of	parent	Stephen_Lushington_(judge)	Sir_Stephen_Lushington,_1st_Baronet	699482	T
+was the eldest son of	parent	Antoine_Juchereau_Duchesnay_(seigneur)	Antoine_Juchereau_Duchesnay_(seigneur)	699588	T
+was the eldest son of	parent	Charles_Thomas_Mills	Charles_Mills,_2nd_Baron_Hillingdon	699646	T
+was the son of	parent	Arthur_John_Moore	Charles_Moore_(Irish_MP)	701002	T
+was the son of	parent	Edward_John_Hutchins	Edward_John_Hutchins	701520	T
+was a son of	parent	Henry_de_Baliol	Eustace_de_Balliol	704650	T
+was the son of	parent	Marco_Torlonia,_6th_Prince_of_Civitella-Cesi	Alessandro_Torlonia,_5th_Prince_of_Civitella-Cesi	702967	T
+was the son of	parent	Henry_Baigent	Edward_Baigent	702027	T
+was the son of	parent	Pola_Gauguin	Paul_Gauguin	703279	T
+was the son of	parent	John_Mayhew_(Conservative_politician)	Horace_Mayhew	702625	T
+was the third son of	parent	Lord_Edward_Cavendish	William_Cavendish,_7th_Duke_of_Devonshire	705071	T
+is a daughter of	parent	Charles_Perkins_(Aboriginal_activist)	Charles_Perkins_(Aboriginal_activist)	704388	F
+was the son of	parent	George_Wilson_(reformer)	John_Dalton	701905	F
+was the son of	parent	Frederick_Hale_(US_senator)	Eugene_Hale	701744	T
+was the son of	parent	Muhammad_II_ibn_al-Husayn	Al-Husayn_II_ibn_Mahmud	703071	T
+was the son of	parent	Francisco_Lopez_Caro	Francisco_Lopez_Caro	701708	T
+ibn	parent	Tahir_ibn_Husayn	Ali_al-Ridha	704503	F
+was the son of	parent	Loukas_Kanakaris-Roufos	Athanasios_Kanakaris-Roufos	702923	T
+was daughter of	parent	Agatha,_wife_of_Edward_the_Exile	Gavril_Radomir_of_Bulgaria	700344	F
+was the eldest son of	parent	Sir_Pierce_Butler,_4th_Baronet	Sir_Thomas_Butler,_3rd_Baronet	700166	T
+was the second son of	parent	William_of_Aumelas	William_V_of_Montpellier	699550	T
+was the son of	parent	Francisco_Diaz-Silveira_Lopez	Francisco_Díaz-Silveira	701706	T
+was the son of	parent	James_Paterson_(journalist)	James_Paterson_(journalist)	702328	T
+was a son of	parent	Vladimir_Olgerdovich	Algirdas	704814	T
+was the third daughter of	parent	Joan_Stewart,_Countess_of_Morton	James_I_of_Scotland	700371	T
+was the son of	parent	Francesco_Cornaro_(Doge)	Giovanni_I_Cornaro	701660	T
+was the eldest son of	parent	Walter_Spencer-Stanhope_(1827–1911)	John_Roddam_Spencer_Stanhope	700257	F
+was daughter of	parent	Agatha,_wife_of_Edward_the_Exile	Mieszko_II_Lambert	700346	T
+was the son of	parent	Rowland_Eustace,_2nd_Viscount_Baltinglass	Thomas_Eustace,_1st_Viscount_Baltinglass	703542	T
+was the son of	parent	Alexander_von_Bournonville	Alexander_von_Bournonville	700867	T
+was the son of	parent	John_Henniker,_1st_Baron_Henniker	John_Henniker,_1st_Baron_Henniker	702571	T
+was the son of	parent	Henri-Auguste_de_Loménie,_comte_de_Brienne	Antoine_de_Loménie	702016	T
+was the son of	parent	Sextus_Cocceius_Vibianus	Sextus_Cocceius_Severianus	703618	T
+was the son of	parent	William_Angerstein	John_Angerstein_(MP)	704106	T
+was a son of	parent	Nicholas_Crispo,_Lord_of_Syros	Francesco_I_Crispo	704725	T
+was the son of	parent	John_V,_Duke_of_Mecklenburg	Albert,_King_of_Sweden	702698	F
+was the son of	parent	Ralph_d'Escures	Seffrid_I	703320	F
+was the son of	parent	Thomas_Jervoise_(1616–1693)	Thomas_Jervoise_(1616–1693)	703891	T
+was the daughter of	parent	Gertrude_Emerson_Sen	Alfred_E._Emerson	700526	F
+was the son of	parent	George_Claude_Lockhart	George_William_Lockhart	701819	T
+was the second son of	parent	Henry_Thomson_(Irish_politician)	Henry_Thomson_(Irish_politician)	699237	T
+was the son of	parent	Robert_Oxenbridge_(died_1616)	Robert_Oxenbridge_(died_1638)	703486	T
+was the son of	parent	Dudley_Beaumont	William_Spencer_Beaumont	701444	T 
 was the son of	parent	Ermengol_X,_Count_of_Urgell	Álvaro,_Count_of_Urgell	701607
 was the son of	parent	Máel_Dúin_mac_Áedo_Bennán	Áed_Bennán_mac_Crimthainn	703096
 was the son of	parent	Bannino_da_Polenta	Guido_I_da_Polenta	701050
