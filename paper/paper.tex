@@ -11,6 +11,7 @@
 \begin{document}
 	
 \maketitle
+\pagestyle{empty}
 		
 \section*{RIASSUNTO}
 		
@@ -47,17 +48,21 @@ Wikipedia è un'enciclopedia online libera e collaborativa, che attualmente comp
  
 Ogni articolo in Wikipedia fa riferimento ad una entità principale, che può rappresentare una persona, un luogo, un oggetto, un fatto, ecc..., identificata con un \textit{wiki ID}. Nel testo le informazioni sono codificate in linguaggio naturale, inoltre le entità secondarie eventualmente presenti in un determinato articolo sono rappresentate usando dei \textit{wikilinks}, una sintassi specifica di Wikipedia per evidenziare un particolare concetto e offrire un link all'articolo che lo descrive.
 
-Nel nostro particolare caso le frasi di Wikipedia su cui lavorare ci sono state fornite dal docente, queste erano nella forma di frasi con le entità già etichettate in una particolare modalità:
-\bigbreak
-\textit{[[Barack\_Obama$|$m.02mjmr]] met [[Donald\_Trump$|$m.0cqt90]] after the elections.}
-\bigbreak
-Come si può vedere le entità sono ben identificate e quindi di facile estrazione, e possiedono anche un id che rappresenta l'entità all'interno di Freebase, non rilevante per questa trattazione.
+Nel nostro particolare caso le frasi di Wikipedia su cui lavorare ci sono state fornite dal docente già processate dagli strumenti messi a disposizione dall' NLP Group di Stanford, in particolare dallo strumento di Named Entity Recognition, queste erano nella forma di frasi con le entità presenti già etichettate in una particolare formato, ad esempio un frammento di interesse di una frase può essere:
+
+\begin{itemize}
+	\item entità soggetto: [[Barack\_Obama$|$m.02mjmr]]
+	\item frase: "met"
+	\item entità oggetto: [[Donald\_Trump$|$m.0cqt90]]
+\end{itemize}
+
+Come si può vedere le entità sono ben identificate e quindi di facile estrazione dalle frasi, inoltre possiedono anche un id che identifica l'entità all'interno di Freebase, non rilevante per questa trattazione.
 
 \subsection*{\textit{DBpedia.}}
 
-DBpedia è frutto di un lavoro di collaborazione da parte di una moltitudine di utenti per estrarre informazioni strutturate da Wikipedia e renderle disponibili sul Web.
+DBpedia è frutto di un lavoro collaborativo da parte di una moltitudine di utenti per estrarre informazioni strutturate da Wikipedia e renderle disponibili sul Web in maniera strutturata.
 
-Ogni "cosa" in DBpedia è identificata da un URI del tipo:
+Ogni entità in DBpedia è identificata da un URI del tipo:
 \bigbreak
 \textbf{http://dbpedia.org/resource/Name}
 \bigbreak
@@ -65,39 +70,52 @@ dove "Name" è preso dall'URL del relativo articolo di Wikipedia, che ha la form
 \bigbreak
 \textbf{http://en.wikipedia.org/wiki/Name}.
 \bigbreak
-In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi e dati accessori presenti in DBpedia, in particolare:
+In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi e dati accessori, in particolare:
+
 \begin{itemize}
 \item dati accessori relativi ai tipi delle entità, ovvero una serie di coppie "URL entità - URL tipo", che associa ad esempio all'entità "Barack Obama" il tipo "Persona";
+
 \item dati accessori relativi agli schemi, contenenti informazioni riguardo dominio e codominio di una relazione, oltre a dati sui tipi e supertipi delle entità utilizzati da DBpedia che analizzeremo in seguito;
+
 \item due dataset rappresentanti ognuno un KG, il primo costruito a partire da fonti più affidabili del secondo. Il secondo è stato utilizzato per filtrare i fatti estratti a partire dal primo.
 \end{itemize}
 
 \subsection*{\textit{Lector.}}
 
+Per estrarre nuovi fatti ed aumentare il grafo è stato seguito un procedimento simile a quello utilizzato originariamente dall'originale  Lector, tuttavia si è scelto di variare leggermente alcune fasi del processo estrattivo, oltre che variare anche alcune scelte relativamente allo scoring delle frasi. Queste modifiche, laddove presenti saranno evidenziate nel seguito della trattazione.
+
 \section{APPROCCIO}
 
-Il dataset iniziale di frasi, come detto precedentemente, ci è stato fornito con le entità etichettate. Inizialmente abbiamo provato ad applicare un approccio euristico per il riconoscimento di frasi di tipo lista, basato su un lavoro precedentemente svolto da alcuni colleghi, che si è rivelato non scalabile. Si è quindi preferito perdere parte dell'informazione in esse presente favorendo la velocità, data la grande mole di dati.
-Il processamento si svolge in diversi passaggi:
-\begin{enumerate}
-\item Verifica della relazionalità della frase in questione;
-\item Etichettatura delle triple "presenti" e "non presenti";
-\item Scoring delle frasi;
-\item Estrazione di informazione.
-\end{enumerate}
+Il dataset iniziale di frasi, come detto precedentemente, ci è stato fornito con le entità etichettate. Inizialmente si è provato ad applicare un approccio basato su euristiche per il riconoscimento di frasi di tipo lista, basato sia su il lavoro svolto dal gruppo di NLP di Stanford sia su un lavoro precedentemente svolto da alcuni colleghi. Questo approccio purtroppo si è rivelato non scalabile su una quantità di frasi come quella a disposizione. 
 
-\subsection{Verifica delle frasi}
-Il dump iniziale delle frasi ci è stato fornito dal professore con le entità delimitate da parentesi quadre e arricchite con l'id relativo su \textit{Freebase}, superfluo per questo lavoro. Il dato all'interno di esse ci fornisce il \textit{wikid} che ci è stato utile per reperire l'entità anche su DBpedia, che usa proprio questi identificatori per salvarle, poiché basato proprio su Wikipedia. In alcuni casi questi identificatori fanno riferimento ad un \textit{redirect} che punta all'effettivo wikid che abbiamo reperito tramite una mappatura offerta da un altro file di input fornito dal docente.
+Si è passati poi ad un approccio basato solamente su semplici euristiche, come ad esempio il controllo dei tipi delle entità candidate ad essere quelle nella lista, il controllo molto semplice richiedeva che tutte le entità nella lista fossero dello stesso tipo, questa è solo un'esempio delle euristiche applicate. Questo approccio si è rivelato efficiente ma non preciso, la quantità di informazione estratta risultava essere poco rilevante rispetto alla mole delle frasi, ulteriori analisi hanno rivelato inoltre che purtroppo questa informazione era quasi sempre non corretta (e.g. l'entità primaria legata alle entità nella lista non erano correlate in nessuna maniera).
 
-Abbiamo quindi suddiviso le frasi iniziali in una lista di triple comprendenti tutte le coppie di entità e il testo compreso tra esse, perdendo parte dell'informazione presente ad esempio in frasi di tipo lista nelle quali il soggetto andrebbe collegato con le varie entità in relazione con esso utilizzando il pezzo di frase che lo collega con la prima entità.
 \begin{figure}[h]
 	\includegraphics[width=7.7cm, height=1.2cm]{stanford}
 	\caption{Esempio di una frase di tipo lista}
 \end{figure}
 
-Le frasi tra le entità sono state quindi passate ad un filtro per trovare quelle relazionali. Questa operazione snellisce di molto la quantità di triple estratte dalle frasi iniziali eliminando la maggior parte degli spezzoni di testo tra entità poiché il filtro è molto restrittivo, garantendo in output delle frasi che quasi sicuramente esprimono una relazione tra due entità.
+Si è quindi preferito perdere una piccola parte dell'informazione presente nelle frasi favorendo la semplicità, data la grande mole di dati.
+
+Il processamento delle frasi fino ad arrivare all'estrazione dei nuovi fatti si svolge in diversi passaggi:
+\begin{enumerate}
+\item Pulizia delle frasi originali di Wikipedia, con estrazione di triple entità-frase-entità;
+\item Verifica della relazionalità delle frasi che legano due entità;
+\item Etichettatura delle triple "presenti" e "non presenti" nel grafo di DBpedia, eseguito due volte, una per ogni grafo;
+\item Scoring delle frasi ottenute dal passo precedente;
+\item Estrazione dei nuovi fatti, eseguita per entrambi i grafi in modo indipendente.
+\end{enumerate}
+
+\subsection{Pulizia delle frasi originali}
+
+Il dump iniziale delle frasi ci è stato fornito dal docente con le entità delimitate da doppie parentesi quadre e arricchite con l'id relativo su \textit{Freebase}, superfluo per questo lavoro. Il dato all'interno di esse ci fornisce il \textit{wiki ID} che è stato utile per reperire l'entità sul grafo di DBpedia, che usa proprio questi identificatori per denotare i nodi. In alcuni casi questi identificatori fanno riferimento ad un \textit{redirect} che punta all'effettivo \textit{wiki ID} che abbiamo reperito tramite una mappatura offerta dal docente, successivamente abbiamo provveduto a sostituire i \textit{redirect} con l'effettivo \textit{wiki ID}.
+
+Abbiamo quindi suddiviso le frasi iniziali in una lista di triple comprendenti tutte le coppie di entità e il testo compreso tra esse, le triple sono state prese in maniera sequenziale, ad esempio se in una frase comparivano 5 entità, le triple sono state estratte nel seguente modo: \textit{ent1-frase1-ent2}, \textit{ent2-frase2-ent3}, ecc.
+
+Le frasi tra le entità sono state quindi passate ad un filtro per trovare quelle relazionali. Quelle che riescono a superare il test vengono usate per scremare le triple estratte al passo precedente, prendendo solamente quelle triple che contengono una delle frasi che ha passato il test relazionale. Questa operazione snellisce di molto la quantità di triple estratte garantendo delle triple che quasi sicuramente esprimono una relazione tra due entità.
 
 \subsection{Etichettatura}
-A questo punto, abbiamo considerato le entità di ogni tripla per verificarne l'effettiva presenza all'interno del grafo di DBpedia, sia in quello fidato che in quello non fidato.
+A questo punto, abbiamo considerato le coppie di entità di ogni tripla per verificarne l'effettiva presenza all'interno del grafo di DBpedia, sia in quello "fidato" che in quello "non fidato".
 
 Le triple cosiddette "etichettate" rappresentano fatti già presenti nel KG e sono utili per ricavare una mappatura tra le frasi che legano le entità e le relazioni ad esse accomunabili.
 
@@ -107,15 +125,31 @@ Le frasi hanno subito una elaborazione molto leggera per pulire le frasi e ricon
 
 \subsection{Scoring}
 
-Ogni frase è associata ad una o più relazioni definite da DBpedia, ma ovviamente queste corrispondenze potrebbero non rispettare l'effettiva semantica delle frasi stesse. (discuss da rivedere) Abbiamo quindi assegnato ad ogni frase un punteggio per definire l'appartenenza o meno ad una relazione considerando principalmente il numero di volte che esse sono associate con la relazione in esame. In questo modo abbiamo cercato di penalizzare frasi che esprimono concetti molto generici, ovvero che compaiono in molte relazioni, poiché non danno molta fiducia sulla correttezza dell'associazione.
+Ogni frase che lega due entità \textit{"etichettate"} a questo punto è associata ad una o più relazioni definite da DBpedia, ma ovviamente queste corrispondenze potrebbero non rispettare l'effettiva semantica o delle frasi stesse, o della relazione a cui sono associate. Abbiamo quindi assegnato ad ogni frase un punteggio per ottenere le frasi che secondo lo score definito, possono esprimere in maniera corretta la relazione a cui sono associate, considerando principalmente il numero di volte che esse sono associate con la relazione in esame e il numero di relazioni in cui compare la frase. In questo modo abbiamo cercato di penalizzare frasi che esprimono concetti molto generici, ovvero che compaiono in molte relazioni, poiché non danno molta fiducia sulla correttezza dell'associazione.
 
-Il punteggio viene assegnato tenendo conto del numero di volte che la frase è collegata alla determinata relazione ( $c(p,r_i)$ ), del conteggio totale delle sue occorrenze in tutte le relazioni ( $\sum_{j \in R} c(p,r_j)$ ) e del numero di relazioni a cui è associata ( $c(R|p)$ ) secondo la seguente formula: (discuss suddividere la formula con la parte centrale raccolta nella probabilità)
-\[score(p,r_i)=c(p,r_i)\cdot\frac{c(p,r_i)}{\sum_{j \in R}c(p,r_j)}\cdot \frac{1}{c(R|p)} \]
-In questo modo una frase otterrà un punteggio maggiore quanto più compare associata alla relazione in questione rispetto al numero totale di occorrenze, penalizzando inoltre le frasi in base al numero di relazioni a cui sono associate, poiché si tratta di forme con molta generalità e utilizzate per esprimere un grande insieme di relazioni diverse. Questo score può penalizzare (discuss ci sono frasi che non esistono, generalità di frasi tipo "is a")
+Il punteggio viene assegnato tenendo conto del numero di volte che la frase è collegata alla relazione i-esima ( $c(p,r_i)$ ), del conteggio totale delle sue occorrenze in tutte le relazioni analizzate e trovate nel processo di etichettatura ( $\sum_{j \in R} c(p,r_j)$ ), unendo questi due fattori si ottiene la probabilità originale di Lector:
+\[P(r_i|p) = \frac{c(p,r_i)}{\sum_{j \in R}c(p,r_j)}\]
+Nel processo di definizione del nuovo score è stato inserito un nuovo fattore moltiplicativo che tiene conto del numero di relazioni a cui è associata la frase in esame ( $c(R|p)$ ).
+
+Il nuovo score risulta essere dunque:
+\[score(p,r_i)=c(p,r_i)\cdot P(r_i|p)\cdot \frac{1}{c(R|p)} \]
+In questo modo una frase otterrà un punteggio maggiore quanto più compare associata alla relazione in questione rispetto al numero totale di occorrenze, penalizzando inoltre le frasi in base al numero di relazioni a cui sono associate. Questo score penalizza le frasi associate con molte relazioni, tuttavia se la frase è associata con la relazione in esame un numero molto alto di volte allora il primo e il terzo fattore tendono a bilanciarsi, questo è il caso delle frasi che esprimono relazioni ontologiche (e.g. "was a", "is a", ecc...), queste sono associate con molte relazioni, tuttavia il loro "count" per alcune di queste è talmente alto che riescono a ottenere un punteggio molto alto all'interno della relazione in esame.
+
+Un'altra differenza con lo score originale è la rimozione del logaritmo del "count" a favore di un fattore lineare, questo per enfatizzare il ruolo di quest'ultimo nel computo dello score finale. Inoltre non è impostata nessuna soglia sulla probabilità per l'ottenimento delle \textit{top-K} frasi, mentre nell'originale Lector la soglia per permettere ad una frase di far parte delle \textit{top-K} frasi di una relazione era 0.5
 
 \subsection{Estrazione dell'informazione}
 
-Nella parte finale prendiamo le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto per ogni relazione e le utilizziamo per estrarre fatti. (discuss gab descrive K) Ogni tripla inoltre per essere considerata valida, deve rispettare i vincoli che la relazione impone su DBpedia per soggetto e oggetto. Ad esempio, la frase "\textit{was born in}" è valida per la relazione \textit{birthPlace} se la prima entità è del tipo "Person" e la seconda del tipo "Place".
+Una volta ottenuto lo score per ogni frase filtriamo per ogni relazione le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto, queste vengono poi utilizzate per estrarre effettivamente i nuovi fatti. 
+
+A questo punto del procedimento si è reso necessario controllare i tipi delle entità dei fatti candidati a essere estratti. Nello schema fornitoci dal docente le entità note a DBpedia vengono associate ad un tipo, quello più specifico per l'entità (e.g. all'entità Barack\_Obama è associato il tipo \textit{OfficeHolder} il quale però è un sottotipo di \textit{Person}, il quale è un sottotipo di Agent, e così via fino a raggiungere la radice dei tipi \textit{Thing}), le entità dunque sono state arricchite con tutti i loro tipi, si è in pratica scorso l'albero dei tipi dal basso verso l'alto partendo dal tipo associato a ogni entità ottenendo per ogni entità tutti i tipi associati, radice \textit{Thing} inclusa.
+
+Oltre a tipi offerti dalle entità è stato necessario controllare e modificare anche i tipi richiesti dalle relazioni. Molte delle relazioni in DBpedia richiedono che il soggetto e l'oggetto rispettino particolari tipi (e.g la relazione \textit{birthPlace} richiede che il soggetto sia un \textit{Person} mentre l'oggetto sia un \textit{Place}), per ogni relazione si è preso il \textit{domain} della relazione ovvero il tipo richiesto al soggetto e il \textit{range} ovvero il tipo richiesto all'oggetto e si sono associati alla relazione. Qualora uno dei due non fosse stato definito allora il tipo scelto per l'associazione è stato \textit{Thing}, questa scelta è stata fatta in seguito ad una serie di test, nello schema fornitoci laddove non ci fosse stato il tipo del \textit{domain} e/o \textit{range} un'analisi sul portale di DBpedia ha rivelato che il tipo associato al campo mancante era sempre \textit{Thing} ovvero la radice dei tipi.
+
+Lo stesso discorso è stato applicato per le relazioni che non hanno né \textit{domain} né \textit{range} specificato, che sono: \textit{religion, authority, builder, category, cpu, currency, division, format, gender, hasVariant, honours, influenced, influencedBy, isPartOf, jurisdiction, localAuthority, mainInterest, management, namedAfter, operatedBy, picture, position, predecessor, related, series, similar, source, sportGoverningBody, successor e webcast}. Per queste relazioni sia \textit{domain} che \textit{range} sono stati fissati a \textit{Thing}, questa scelta poteva portare ad estrarre fatti errati poiché a questo punto non c'è nessuna limitazione sul tipo delle entità legate da una delle suddette relazioni, tuttavia un'analisi svolta sulla relazione \textit{religion} ci dimostra che la precisione anche senza vincolo dei tipi richiesti risulta essere molto alta. 
+
+Da notare che grazie al passaggio precedente eseguito sulle entità è possibile che il test del tipo richiesto da una relazione passi, nel caso in cui l'entità su cui si esegue il test offra un sottotipo di quello richiesto (se è offerto \textit{Scientist} e viene richiesto \textit{Person} allora il test passa), ma fallisca nel caso in cui l'entità su cui si esegue il test offra solamente un supertipo di quello richiesto (se è offerto \textit{Person} e viene richiesto \textit{Scientist} il test fallisce), questo è ottenuto senza ulteriori modifiche a \textit{domain} e/o \textit{range} delle relazioni.
+
+Alla luce di quanto detto precedentemente, nella fase di estrazione un nuovo fatto viene estratto se la frase che lega le due entità della tripla è presente nelle \textit{top-K} frasi di una delle relazioni in esame e se i tipi dell'oggetto e del soggetto sono compatibili con quelli richiesti dalla relazione associata alla frase del passo precedente.  
 
 \section{VALUTAZIONE}
 
