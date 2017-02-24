@@ -139,6 +139,46 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 
 \subsection{Estrazione dell'informazione}
 
+\begin{table*}[t]
+	\centering
+	\label{nuovi-vecchi}
+	\begin{tabular}{lllll}
+		tipo di grafo utilizzato    & \textit{\#fatti presenti} & \textit{\#nuovi fatti estratti} &  &  \\
+		\hline
+		grafo con fatti "trusted"   & 14,913,819                & 933,484                         &  &  \\
+		grafo con fatti "untrusted" & 11,478,361                & 1,309,598                       &  &  \\
+		&                           &                                 &  & 
+	\end{tabular}
+		\caption{Estrazione dei nuovi fatti in relazione ai fatti già esistenti}
+\end{table*}
+
+
+\begin{table*}[t]
+	\centering
+	\begin{minipage}{\textwidth}
+	
+	\begin{tabular}{lllllll}
+		Relazione & \textit{\#"trusted"} & \textit{\#new "trusted"} & \textit{\#new "untrusted"} & \#new comuni & \#valutati & precisione \\
+		\hline \\
+		birthPlace           & 1,131,887            & 56,554                   & 107,030                    & 56,126       & 100        & 87\%       \\
+		deathPlace \footnote{La relazione deathPlace soffre molto del filtraggio, i fatti ottenuti a partire dal grafo "untrusted" non risultano essere imprecisi, tutt'altro, ne risulta dunque una bassissima precisione dovuta al fatto che le triple valutate sono proprio un sottoinsieme sporco dei nuovi fatti "trusted", legati principalmente dalla frase \textit{moved to.}}           & 303,537              & 35,392                   & 22,154                     & 17,260       & 100        & 16\%       \\
+		nationality          & 123,492              & 3,614                    & 20                         & 0            & 100        & 100\%      \\
+		team                 & 778,837              & 9,977                    & 11,520                     & 917          & 100        & 89\%       \\
+	almaMater           & 119,573              & 77,944                   & 65,113                     & 63,246       & 100        & 98\%       \\
+	spouse               & 35,450               & 6,378                    & 7,081                      & 6,324        & 54         & 50\%       \\
+	\hline \\
+	parent \footnote{Le relazioni \textit{parent} e \textit{child} hanno dei problemi legati all'omonimia tra gli antenati e i successori, gli strumenti di NER quasi mai riescono a discernere l'antenato dal successore se questi hanno lo stesso nome, in questi casi abbiamo un fatto in cui soggetto e oggetto puntano entrambi allo stesso \textit{wiki ID} costringendoci a etichettare il fatto come falso.}               & 28,308               & 6,397                    & 8                          & 8            & 100        & 63\%       \\
+	child \footnote{Vedi nota \textit{b}.}                & 14,503               & 856                      & 0                          & 0            & 127        & 57,4\%     \\
+	ethnicity            & 7,864                & 1,776                    & 1,450                      & 1,303        & 104        & 89,4\%     \\
+	religion             & 47,683               & 877                      & 900                        & 596          & 103        & 71,8\%     \\
+	award                & 86,279               & 3,087                    & 0                          & 0            & 101        & 94\%       \\
+	party                & 81,526               & 3,486                    & 3,614                      & 3,421        & 65         & 95,3\%    
+	\end{tabular}
+\end{minipage}
+	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni}
+	\label{my-label}
+\end{table*}
+
 Una volta ottenuto lo score per ogni frase filtriamo per ogni relazione le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto, queste vengono poi utilizzate per estrarre effettivamente i nuovi fatti. 
 
 A questo punto del procedimento si è reso necessario controllare i tipi delle entità dei fatti candidati a essere estratti. Nello schema fornitoci dal docente le entità note a DBpedia vengono associate ad un tipo, quello più specifico per l'entità (e.g. all'entità Barack\_Obama è associato il tipo \textit{OfficeHolder} il quale però è un sottotipo di \textit{Person}, il quale è un sottotipo di Agent, e così via fino a raggiungere la radice dei tipi \textit{Thing}), le entità dunque sono state arricchite con tutti i loro tipi, si è in pratica scorso l'albero dei tipi dal basso verso l'alto partendo dal tipo associato a ogni entità ottenendo per ogni entità tutti i tipi associati, radice \textit{Thing} inclusa.
@@ -151,6 +191,12 @@ Da notare che grazie al passaggio precedente eseguito sulle entità è possibile
 
 Alla luce di quanto detto precedentemente, nella fase di estrazione un nuovo fatto viene estratto se la frase che lega le due entità della tripla è presente nelle \textit{top-K} frasi di una delle relazioni in esame e se i tipi dell'oggetto e del soggetto sono compatibili con quelli richiesti dalla relazione associata alla frase del passo precedente.  
 
+
 \section{VALUTAZIONE}
+
+Come possiamo vedere dalla tabella in \ref{nuovi-vecchi} il numero dei fatti nuovi estratti a partire dal grafo considerato meno affidabile è superiore a quello relativo al numero dei nuovi fatti estratti a partire dal grafo più affidabile, questo è dovuto ad una serie di fattori: alcune relazioni del grafo "fidato" sono assimilabili a più relazioni del grafo non fidato, dunque è possibile utilizzare un numero maggiore di \textit{top-K} per estrarre ulteriori fatti; il numero di fatti non etichettati è maggiore nel primo caso rispetto al secondo, dunque è più probabile estrarre un maggior numero di fatti nuovi semplicemente perché si hanno più fatti da estrarre.
+
+I 570,976 fatti comuni ai due insiemi di nuovi fatti estratti sono stati utilizzati per filtrare i nuovi fatti estratti a partire dal grafo fidato. Per la valutazione dunque ci siamo concentrati sulle dodici relazioni analizzate originariamente da Lector, ovvero:
+\textit{birthPlace, deathPlace, nationality, team, almaMater, spouse, parent, child, ethnicity, religion, award, party}. Il numero di fatti filtrati è dunque 362,508 e su questi si è concentrata la nostra analisi.
 
 \end{document}
