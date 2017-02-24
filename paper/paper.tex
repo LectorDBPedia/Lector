@@ -157,24 +157,25 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 	\centering
 	\begin{minipage}{\textwidth}
 	
-	\begin{tabular}{lllllll}
-		Relazione & \textit{\#"trusted"} & \textit{\#new "trusted"} & \textit{\#new "untrusted"} & \#new comuni & \#valutati & precisione \\
+		\begin{tabular}{lllllll}
+		\hline \\
+		Relazione & \textit{\#"trusted"} & \textit{\#n. "trusted"} & \textit{\#n. "untrusted"} & \#n. comuni & \#eval. & precisione \\
 		\hline \\
 		birthPlace           & 1,131,887            & 56,554                   & 107,030                    & 56,126       & 100        & 87\%       \\
 		deathPlace \footnote{La relazione deathPlace soffre molto del filtraggio, i fatti ottenuti a partire dal grafo "untrusted" non risultano essere imprecisi, tutt'altro, ne risulta dunque una bassissima precisione dovuta al fatto che le triple valutate sono proprio un sottoinsieme sporco dei nuovi fatti "trusted", legati principalmente dalla frase \textit{moved to.}}           & 303,537              & 35,392                   & 22,154                     & 17,260       & 100        & 16\%       \\
 		nationality          & 123,492              & 3,614                    & 20                         & 0            & 100        & 100\%      \\
 		team                 & 778,837              & 9,977                    & 11,520                     & 917          & 100        & 89\%       \\
-	almaMater           & 119,573              & 77,944                   & 65,113                     & 63,246       & 100        & 98\%       \\
-	spouse               & 35,450               & 6,378                    & 7,081                      & 6,324        & 54         & 50\%       \\
-	\hline \\
-	parent \footnote{Le relazioni \textit{parent} e \textit{child} hanno dei problemi legati all'omonimia tra gli antenati e i successori, gli strumenti di NER quasi mai riescono a discernere l'antenato dal successore se questi hanno lo stesso nome, in questi casi abbiamo un fatto in cui soggetto e oggetto puntano entrambi allo stesso \textit{wiki ID} costringendoci a etichettare il fatto come falso.}               & 28,308               & 6,397                    & 8                          & 8            & 100        & 63\%       \\
-	child \footnote{Vedi nota \textit{b}.}                & 14,503               & 856                      & 0                          & 0            & 127        & 57,4\%     \\
-	ethnicity            & 7,864                & 1,776                    & 1,450                      & 1,303        & 104        & 89,4\%     \\
-	religion             & 47,683               & 877                      & 900                        & 596          & 103        & 71,8\%     \\
-	award                & 86,279               & 3,087                    & 0                          & 0            & 101        & 94\%       \\
-	party                & 81,526               & 3,486                    & 3,614                      & 3,421        & 65         & 95,3\%    
-	\end{tabular}
-\end{minipage}
+		almaMater           & 119,573              & 77,944                   & 65,113                     & 63,246       & 100        & 98\%       \\
+		spouse               & 35,450               & 6,378                    & 7,081                      & 6,324        & 54         & 50\%       \\
+		\hline \\
+		parent \footnote{Le relazioni \textit{parent} e \textit{child} hanno dei problemi legati all'omonimia tra gli antenati e i successori, gli strumenti di NER quasi mai riescono a discernere l'antenato dal successore se questi hanno lo stesso nome, in questi casi abbiamo un fatto in cui soggetto e oggetto puntano entrambi allo stesso \textit{wiki ID} costringendoci a etichettare il fatto come falso.}               & 28,308               & 6,397                    & 8                          & 8            & 100        & 63\%       \\
+		child \footnote{Vedi nota \textit{b}.}                & 14,503               & 856                      & 0                          & 0            & 127        & 57,4\%     \\
+		ethnicity            & 7,864                & 1,776                    & 1,450                      & 1,303        & 104        & 89,4\%     \\
+		religion             & 47,683               & 877                      & 900                        & 596          & 103        & 71,8\%     \\
+		award                & 86,279               & 3,087                    & 0                          & 0            & 101        & 94\%       \\
+		party                & 81,526               & 3,486                    & 3,614                      & 3,421        & 65         & 95,3\%    
+		\end{tabular}
+	\end{minipage}
 	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni}
 	\label{my-label}
 \end{table*}
