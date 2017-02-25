@@ -5,6 +5,11 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{sectsty}
+
+\sectionfont{\fontsize{13}{15}\selectfont}
+\subsectionfont{\fontsize{11}{12}\selectfont}
+
 
 \author{M. Faretra, G. Marini, A. Martinelli}
 \title{\textbf{Raccolta accurata di fatti da testo in linguaggio naturale di Wikipedia}\\Ricreare Lector utilizzando DBpedia}
@@ -15,15 +20,13 @@
 		
 \section*{RIASSUNTO}
 		
-Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazione contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte dei fatti estraibili, la rilevazione di essi però risulta più problematica, trovandosi all'interno di un testo in linguaggio naturale, sicuramente più variegato e meno strutturato degli infoboxes, questi fatti non sono facilmente riconoscibili e dunque estraibili per aumentare la base di conoscenza. In questo lavoro si cerca di quantificare il numero e la precisione di nuovi fatti estratti da questi articoli con il supporto di un KG già popolato. In particolare, la nostra valutazione è stata effettuata utilizzando DBpedia, un KG gratuito, che ci ha portato a... (discuss to be implemented, un paio di numeri sui risultati che poi verranno discussi meglio)
+Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazioni contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte dei fatti estraibili, la rilevazione di essi però risulta più problematica, trovandosi all'interno di un testo in linguaggio naturale, sicuramente più variegato e meno strutturato degli infoboxes, questi fatti non sono facilmente riconoscibili e dunque estraibili per aumentare la base di conoscenza. In questo lavoro si cerca di quantificare il numero e la precisione di nuovi fatti estratti da questi articoli con il supporto di un KG già popolato. In particolare, il nostro lavoro è stato effettuato utilizzando DBpedia, un KG gratuito, che ci ha portato a estrarre circa 1,2 milioni di nuovi fatti non presenti in DBpedia.
 
 \section{INTRODUZIONE} 
 
 L'incremento dei Knowledge Graph in questi ultimi tempi è stata di particolare interesse scientifico e ha evidenziato la concreta possibilità di aumentare la base di conoscenza che queste strutture possono offrire.
 
 Il progetto DBpedia fornisce informazioni e fatti in 125 linguaggi differenti. La più grande base di conoscenza è estratta dalla versione inglese e consiste in 1,3 miliardi di fatti che descrivono 6 milioni di entità. 
-
-%DBpedia estrae informazione dal testo di Wikipedia da 28 edizioni in linguaggi differenti in una singola ontologia condivisa consistente di circa 685 classi e 2795 proprietà. 
 
 La conoscenza estraibile dal testo libero potrebbe essere decisamente più consistente e aumentare di molto il Knowledge Graph. L'approccio utilizzato va a scalare sfruttando i fatti già contenuti nel KG stesso, è quindi dipendente anche da essi: DBpedia offre una varietà di grafi da poter utilizzare, per questo lavoro sono stati utilizzati due grafi, il primo realizzato a partire dalle informazioni estratte dagli infoboxes fidati, dunque molto pulite; mentre il secondo è stato realizzato a partire sempre dagli infoboxes ma accettando informazioni anche meno pulite rispetto alle prime. I due grafi sono stati utilizzati parallelamente in due processi distinti di estrazione dei fatti.
 
@@ -32,17 +35,17 @@ L'utilizzo di Wikipedia è ampiamente diffuso tra i vari KG esistenti data la gr
 Se invece si va a considerare la conoscenza presente nel testo libero, si può immaginare che da esso (ovviamente presente in ogni articolo) si possa estrarre informazione non presente nel KG poiché esso riporta una serie di informazioni che probabilmente non sono presenti nell'infobox, ad esempio riguardanti entità che non sono il soggetto dell'articolo.
 
 Il nostro approccio al problema considera pattern del tipo 
-"[entità] frase [entità]", ad esempio: "Francesco Totti was born in Rome" mette in relazione le due entità "Francesco Totti" e "Rome" utilizzando la frase "was born in" che descrive, in questo caso, un'istanza della relazione "birthPlace".
+"[entità] frase [entità]", ad esempio: "Ennio Morricone was born in Rome" mette in relazione le due entità "Ennio Morricone" e "Rome" utilizzando la frase "was born in" che descrive, in questo caso, un'istanza della relazione "birthPlace".
 
 In questo articolo descriviamo l'approccio di estrazione di conoscenza da testo libero di Wikipedia, e i risultati in termini di aumento dei fatti presenti in DBpedia.
 
 Per l'estrazione abbiamo generato dal dump in input, un insieme di frasi in cui le entità erano già state riconosciute, triple candidate a rappresentare informazione valida, verificando successivamente se la frase della tripla candidata potesse o meno esprimere una relazione.
 (discuss sommaria spiegazione del processo e qualche numero di risultati)
 
-Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta l'approccio utilizzato per estrarre nuovi fatti; nel Capitolo 4 vengono mostrati i risultati ottenuti; nel Capitolo 5 si trovano cenni a lavori correlati e su cui ci siamo basati (discuss se vogliamo scriverci qualche cagata su Lector da cui siamo partiti); infine, nel Capitolo 6 vengono presentate le conclusioni sul lavoro effettuato ed eventuali sviluppi futuri.
+Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta l'approccio utilizzato per estrarre nuovi fatti; nel Capitolo 4 vengono mostrati i risultati ottenuti; infine, nel Capitolo 5 vengono presentate le conclusioni sul lavoro effettuato; nell'ultimo capitolo si discutono alcuni sviluppi futuri che potrebbero rendere il sistema sviluppato più performante.
 
 \section{RISORSE}
-\subsection*{\textit{Wikipedia.}}
+\subsection*{\textit{Wikipedia}}
 
 Wikipedia è un'enciclopedia online libera e collaborativa, che attualmente comprende circa 5.3 milioni di articoli nella sua versione inglese. Questa modalità di collaborazione garantisce una grande qualità e affidabilità sulle informazione ed anche una certa omogeneità nell'esprimere determinati concetti che va a facilitare l'estrazione di fatti utilizzando proprio questi pattern ricorrenti.
  
@@ -58,7 +61,7 @@ Nel nostro particolare caso le frasi di Wikipedia su cui lavorare ci sono state 
 
 Come si può vedere le entità sono ben identificate e quindi di facile estrazione dalle frasi, inoltre possiedono anche un id che identifica l'entità all'interno di Freebase, non rilevante per questa trattazione.
 
-\subsection*{\textit{DBpedia.}}
+\subsection*{\textit{DBpedia}}
 
 DBpedia è frutto di un lavoro collaborativo da parte di una moltitudine di utenti per estrarre informazioni strutturate da Wikipedia e renderle disponibili sul Web in maniera strutturata.
 
@@ -80,7 +83,7 @@ In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. 
 \item due dataset rappresentanti ognuno un KG, il primo costruito a partire da fonti più affidabili del secondo. Il secondo è stato utilizzato per filtrare i fatti estratti a partire dal primo.
 \end{itemize}
 
-\subsection*{\textit{Lector.}}
+\subsection*{\textit{Lector}}
 
 Per estrarre nuovi fatti ed aumentare il grafo è stato seguito un procedimento simile a quello utilizzato originariamente dall'originale  Lector, tuttavia si è scelto di variare leggermente alcune fasi del processo estrattivo, oltre che variare anche alcune scelte relativamente allo scoring delle frasi. Queste modifiche, laddove presenti saranno evidenziate nel seguito della trattazione.
 
@@ -168,7 +171,7 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 		almaMater           & 119,573              & 77,944                   & 65,113                     & 63,246       & 100        & 98\%       \\
 		spouse               & 35,450               & 6,378                    & 7,081                      & 6,324        & 54         & 50\%       \\
 		\hline \\
-		parent \footnote{Le relazioni \textit{parent} e \textit{child} hanno dei problemi legati all'omonimia tra gli antenati e i successori, gli strumenti di NER quasi mai riescono a discernere l'antenato dal successore se questi hanno lo stesso nome, in questi casi abbiamo un fatto in cui soggetto e oggetto puntano entrambi allo stesso \textit{wiki ID} costringendoci a etichettare il fatto come falso.}               & 28,308               & 6,397                    & 8                          & 8            & 100        & 63\%       \\
+		parent \footnote{Le relazioni \textit{parent} e \textit{child} hanno dei problemi legati all'omonimia tra gli antenati e i successori, gli strumenti di NER quasi mai riescono a discernere l'antenato dal discendente se questi hanno lo stesso nome, in questi casi abbiamo un fatto in cui soggetto e oggetto puntano entrambi allo stesso \textit{wiki ID} costringendoci a etichettare il fatto come falso.}               & 28,308               & 6,397                    & 8                          & 8            & 100        & 63\%       \\
 		child \footnote{Vedi nota \textit{b}.}                & 14,503               & 856                      & 0                          & 0            & 127        & 57,4\%     \\
 		ethnicity            & 7,864                & 1,776                    & 1,450                      & 1,303        & 104        & 89,4\%     \\
 		religion             & 47,683               & 877                      & 900                        & 596          & 103        & 71,8\%     \\
@@ -177,7 +180,7 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 		\end{tabular}
 	\end{minipage}
 	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni}
-	\label{my-label}
+	\label{dati}
 \end{table*}
 
 Una volta ottenuto lo score per ogni frase filtriamo per ogni relazione le 20 frasi (o tutte se ce ne sono meno) con punteggio più alto, queste vengono poi utilizzate per estrarre effettivamente i nuovi fatti. 
@@ -195,9 +198,43 @@ Alla luce di quanto detto precedentemente, nella fase di estrazione un nuovo fat
 
 \section{VALUTAZIONE}
 
-Come possiamo vedere dalla tabella in \ref{nuovi-vecchi} il numero dei fatti nuovi estratti a partire dal grafo considerato meno affidabile è superiore a quello relativo al numero dei nuovi fatti estratti a partire dal grafo più affidabile, questo è dovuto ad una serie di fattori: alcune relazioni del grafo "fidato" sono assimilabili a più relazioni del grafo non fidato, dunque è possibile utilizzare un numero maggiore di \textit{top-K} per estrarre ulteriori fatti; il numero di fatti non etichettati è maggiore nel primo caso rispetto al secondo, dunque è più probabile estrarre un maggior numero di fatti nuovi semplicemente perché si hanno più fatti da estrarre.
+Come possiamo vedere dalla tabella in \ref{nuovi-vecchi} il numero dei fatti nuovi estratti a partire dal grafo considerato meno affidabile è superiore a quello relativo al numero dei nuovi fatti estratti a partire dal grafo più affidabile, questo è dovuto ad una serie di fattori: ad esempio alcune relazioni del grafo "non fidato" sono assimilabili a una relazione del grafo "fidato", dunque è possibile utilizzare un numero maggiore di \textit{top-K} per estrarre ulteriori fatti.
 
-I 570,976 fatti comuni ai due insiemi di nuovi fatti estratti sono stati utilizzati per filtrare i nuovi fatti estratti a partire dal grafo fidato. Per la valutazione dunque ci siamo concentrati sulle dodici relazioni analizzate originariamente da Lector, ovvero:
-\textit{birthPlace, deathPlace, nationality, team, almaMater, spouse, parent, child, ethnicity, religion, award, party}. Il numero di fatti filtrati è dunque 362,508 e su questi si è concentrata la nostra analisi.
+I 490,503 fatti comuni ai due insiemi di nuovi fatti sono stati utilizzati per filtrare i nuovi fatti estratti a partire dal grafo fidato. Per la valutazione dunque ci siamo concentrati sulle dodici relazioni analizzate originariamente da Lector, ovvero:
+\textit{birthPlace, deathPlace, nationality, team, almaMater, spouse, parent, child, ethnicity, religion, award, party} e sul particolare insieme appena definito. Il numero di fatti filtrati è dunque 431,056 e su questi si è concentrata la nostra analisi.
+
+\subsection{\textit{religion}}
+
+In questa sottosezione analizziamo meglio alcuni dei risultati ottenuti riguardanti le relazioni che non offrono né \textit{domain} e né \textit{range} all'interno dello schema di DBpedia. Prendiamo la relazione \textit{religion} come esempio, questa non definisce né dominio né codominio, come detto prima la nostra scelta è stata quella di considerare corretto il tipo di qualsiasi entità associata a questo insieme di relazioni.
+
+Questa scelta porta ad estrarre fatti molto eterogenei tra loro, in particolare gli errori riscontrati si sono visti in caso di entità associate mediante le frasi \textit{practice, practices}, queste possono essere sicuramente collegate al dominio religioso, ma molto più spesso si riconducono al dominio sportivo. Una scelta più accurata dei tipi delle entità che possono essere legate da questo insieme di relazioni potrebbe aumentare la precisione di molti punti percentuali, portando questa ad essere praticamente uguale al valore dell'originale Lector.
+
+\subsection{\textit{child} e \textit{parent}}\label{child&parent}
+
+Queste due relazioni, sono di difficile gestione, la precisione risulta essere più bassa dell'originale Lector, tuttavia questo è dovuto non alla presenza di frasi fuorvianti come ad esempio \textit{was succeeded by}, frase che nelle originali estrazioni portava dei fatti non corretti. 
+
+In questo caso, in quasi la totalità dei fatti etichettati come non corretti, sono presenti casi di omonimia tra successore/discendente, ad esempio \textit{John Christopher Smith jr.} è il figlio di \textit{John Christopher Smith}, gli strumenti di NER spesso non sono riusciti a comprendere quale sia il \textit{Wiki ID} del figlio e quale il \textit{wiki ID} del padre, sostanzialmente i due non sono assolutamente distinti, il risultato è che il fatto riporta lo stesso \textit{Wiki ID} sia per il soggetto che per l'oggetto.
+
+Questi fatti dunque risultano collegare due entità identiche, come se il figlio fosse padre di se stesso e viceversa, costringendoci ad etichettare il fatto come falso. Se si isolano questi fatti da quelli valutati il rimanente insieme dei fatti assume una precisione molto vicina al 100\%.
+
+\subsection{\textit{deathPlace}} \label{deathPlace}
+
+La relazione \textit{deathPlace} è quella con la precisione più bassa tra quelle analizzate, tuttavia l'analizzarla ci ha permesso di comprendere alcuni fattori importanti, come è possibile vedere dalla tabella il numero di fatti nuovi a partire dal grafo "trusted" è a volte simile se non inferiore al numero di nuovi fatti "untrusted". Per come è stata fatta l'analisi dei nuovi fatti, quelli valutati sono un sottoinsieme esclusivo dei fatti "trusted", analizzando anche però quelli "untrusted" si è visto che questi tendono ad avere una precisione molto più alta, almeno nel caso della relazione in esame.
+
+Questa discordanza di precisione tra i fatti dei due insiemi ci porta a dire che per alcune relazioni è possibile che i fatti estratti possano avere precisione simile qualunque sia il grafo di partenza utilizzato, potrebbe essere dunque utile unire i due grafi di partenza in modo tale da non creare problemi legati alla precisione nella fase di estrazione riguardante questo tipo di relazioni, qualora questa venga effettuata con il filtraggio dei fatti come è stata eseguita nel nostro lavoro.
+
+\section{CONCLUSIONI}
+
+In questa trattazione è stato illustrato il processo di estrazione che ci ha portato a identificare più di un milione di nuovi fatti non presenti in DBpedia, inoltre sono state analizzate a fondo alcune relazioni importanti nel dominio delle persone. \'E stato visto come è possibile estrarre una buona quantità di nuovi fatti con una precisione che può arrivare ad essere prossima al 100\%. 
+
+Inoltre è stato visto come in alcuni casi laddove la precisione risulta essere molto più bassa di quanto ci si può aspettare, i problemi possono essere legati ai sistemi di preprocessamento del testo quali ad esempi gli strumenti di NER, e che tolti quei fatti affetti da questi problemi la precisione sale di molti punti percentuali fino ad arrivare a valori molto prossimi al 95-100\%, questo a riprova che il metodo di estrazioni è sufficientemente robusto e preciso.
+
+\section{SVILUPPI FUTURI}
+
+In un futuro si potrebbero svolgere varie attività utili al miglioramento del processo di estrazione, alcune di queste possono riguardare la definizione di \textit{domain} e \textit{range} per quelle relazioni che non lo prevedono nello schema. Questo potrebbe portare ad un ulteriore filtraggio dei fatti, lasciando passare solo quelli che rispettano il nuovo vincolo relazionale, probabilmente aumentando di conseguenza la precisione ai valori dell'originale Lector.\footnote{Vedi Tabella \ref{dati}}
+
+Un'altra attività che si può svolgere è l'unione dei due dataset iniziali, ovvero del grafo "trusted" e del grafo "untrusted", nella fase di estrazione e di valutazione è stato visto che i fatti nel grafo "untrusted" sono sicuramente di qualità inferiore ma non così inferiori come si è pensato quando sono stati svolti i primi passi nella realizzazione del sistema. Questo potrebbe portare ad un aumento del numero dei nuovi fatti, al costo di un abbassamento della precisione di questi ultimi che potrebbe risultare irrisorio, addirittura in alcuni casi questa unione può essere vantaggiosa.\footnote{Vedi \ref{deathPlace}}
+
+Un'ultima riflessione che è possibile fare riguarda l'eterogeneità delle relazioni presenti nel grafo "untrusted", questo infatti ospita una moltitudine di relazioni o \textit{property}, queste si possono spesso riunire in gruppi di 2-3 elementi ed assimilare ad una relazione particolare delle relazioni "trusted", ad esempio le \textit{properties} \textit{placeOfBirth} e \textit{birthPlace} possono essere assimilate entrambe alla stessa relazione "trusted" ovvero \textit{ontology/birthPlace}. L'assimilazione permetterebbe di ottenere più fatti "untrusted" nuovi, cosa che permette di filtrare con maggiore qualità i nuovi fatti "trusted". Tuttavia come abbiamo illustrato prima questo filtraggio può anche portare ad un abbassamento drastico della precisione dei nuovi fatti, come visto ad esempio nella relazione \textit{birthPlace}.
 
 \end{document}
