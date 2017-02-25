@@ -162,10 +162,10 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 	
 		\begin{tabular}{lllllll}
 		\hline \\
-		Relazione & \textit{\#"trusted"} & \textit{\#n. "trusted"} & \textit{\#n. "untrusted"} & \#n. comuni & \#eval. & precisione \\
+		Relazione & \textit{\#"trusted"} & \#n.\textit{"trusted"} & \#n.\textit{"untrusted"} & \#n. comuni & \#eval. & precisione \\
 		\hline \\
 		birthPlace           & 1,131,887            & 56,554                   & 107,030                    & 56,126       & 100        & 87\%       \\
-		deathPlace \footnote{La relazione deathPlace soffre molto del filtraggio, i fatti ottenuti a partire dal grafo "untrusted" non risultano essere imprecisi, tutt'altro, ne risulta dunque una bassissima precisione dovuta al fatto che le triple valutate sono proprio un sottoinsieme sporco dei nuovi fatti "trusted", legati principalmente dalla frase \textit{moved to.}}           & 303,537              & 35,392                   & 22,154                     & 17,260       & 100        & 16\%       \\
+		deathPlace \footnote{La relazione deathPlace soffre molto del filtraggio, i fatti ottenuti a partire dal grafo "untrusted" non risultano essere imprecisi, tutt'altro, ne risulta dunque una bassissima precisione dovuta al fatto che le triple valutate sono proprio un sottoinsieme sporco dei nuovi fatti "trusted", legati principalmente dalla frase \textit{"moved to"}.}           & 303,537              & 35,392                   & 22,154                     & 17,260       & 100        & 16\%       \\
 		nationality          & 123,492              & 3,614                    & 20                         & 0            & 100        & 100\%      \\
 		team                 & 778,837              & 9,977                    & 11,520                     & 917          & 100        & 89\%       \\
 		almaMater           & 119,573              & 77,944                   & 65,113                     & 63,246       & 100        & 98\%       \\
@@ -179,7 +179,7 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 		party                & 81,526               & 3,486                    & 3,614                      & 3,421        & 65         & 95,3\%    
 		\end{tabular}
 	\end{minipage}
-	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni}
+	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni. \newline Legenda: \textit{\#"trusted"} si riferisce al numero di fatti "trusted" già presenti nel corrispondente grafo; \#n.\textit{"trusted"} si riferisce al numero di nuovi fatti estratti a partire dal grafo \textit{"trusted"}; \#n.\textit{"untrusted"} si riferisce al numero di nuovi fatti estratti a partire dal grafo \textit{"untrusted"}; \#n. comuni si riferisce al numero di nuovi fatti comuni ai due insiemi precedenti; \#eval. si riferisce al numero di fatti valutati (presi randomicamente all'interno della relazione).}
 	\label{dati}
 \end{table*}
 
