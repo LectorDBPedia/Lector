@@ -16,11 +16,14 @@
 \begin{document}
 	
 \maketitle
+\thispagestyle{empty}
 \pagestyle{empty}
 		
 \section*{RIASSUNTO}
 		
-Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazioni contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte dei fatti estraibili, la rilevazione di essi però risulta più problematica, trovandosi all'interno di un testo in linguaggio naturale, sicuramente più variegato e meno strutturato degli infoboxes. Questi fatti non sono facilmente riconoscibili e dunque estraibili per aumentare la base di conoscenza. In questo lavoro si cerca di quantificare il numero e la precisione di nuovi fatti estratti da questi articoli con il supporto di un KG già popolato. In particolare, il nostro lavoro è stato effettuato utilizzando DBpedia, un KG gratuito, che ci ha portato a estrarre circa 1,2 milioni di nuovi fatti.
+Molti approcci sono stati tentati nell'ultimo periodo per estrarre informazione da Wikipedia sotto forma di fatti (entità, relazione, entità) per il popolamento di Knowledge Graphs, in particolare sfruttando le informazioni contenute nelle sue \textit{infoboxes}. Tuttavia queste strutture dati riportano solo una piccola parte delle informazioni contenute negli articoli. Infatti nel testo libero si concentra la maggior parte dei fatti estraibili, la rilevazione di essi però risulta più problematica, trovandosi all'interno di un testo in linguaggio naturale, sicuramente più variegato e meno strutturato degli infoboxes. Questi fatti non sono facilmente riconoscibili e dunque estraibili per aumentare la base di conoscenza. 
+
+In questo lavoro propone una metodologia di estrazione di nuovi fatti a partire da questi articoli, con il supporto di un KG già popolato, inoltre si quantifica il numero di nuovi fatti estratti e se ne valuta un campione per verificarne la qualità. In particolare, il nostro lavoro è stato effettuato utilizzando DBpedia, un KG gratuito, che ci ha portato a estrarre circa 1,2 milioni di nuovi fatti, spesso con precisione molto alta.
 
 \section{INTRODUZIONE} 
 
@@ -28,30 +31,29 @@ Le tecniche per l'incremento dei Knowledge Graph in questi ultimi tempi sono sta
 
 Il progetto DBpedia fornisce informazioni e fatti in 125 linguaggi differenti. La più grande base di conoscenza è estratta dalla versione inglese e consiste in 1,3 miliardi di fatti che descrivono 6 milioni di entità. 
 
-La conoscenza estraibile dal testo libero potrebbe essere decisamente più consistente e aumentare di molto il Knowledge Graph. L'approccio utilizzato va a scalare sfruttando i fatti già contenuti nel KG stesso, è quindi dipendente anche da essi: DBpedia offre una varietà di grafi da poter utilizzare, per questo lavoro sono stati utilizzati due grafi, il primo realizzato a partire dalle informazioni estratte dagli infoboxes fidati, dunque molto pulite; mentre il secondo è stato realizzato a partire sempre dagli infoboxes ma accettando informazioni anche meno pulite rispetto alle prime. I due grafi sono stati utilizzati parallelamente in due processi distinti di estrazione dei fatti.
+La conoscenza estraibile dal testo libero potrebbe essere decisamente più consistente e aumentare di molto il Knowledge Graph. L'approccio utilizzato va a scalare sfruttando i fatti già contenuti nel KG stesso, è quindi dipendente anche da essi: DBpedia offre una varietà di grafi da poter utilizzare, per questo lavoro sono stati utilizzati due grafi, il primo realizzato a partire dalle informazioni estratte dalle infoboxes fidate, dunque molto pulite; mentre il secondo è stato realizzato a partire sempre dalle infoboxes ma accettando informazioni anche meno pulite rispetto alle prime. I due grafi sono stati utilizzati parallelamente in due processi distinti di estrazione dei fatti.
 
 L'utilizzo di Wikipedia è ampiamente diffuso tra i vari KG esistenti data la grande affidabilità che ormai garantisce, tuttavia le infoboxes fino a pochi anni fa erano ancora molto poco diffuse e solo nell'ultimo decennio esse si trovano in più della metà degli articoli.
 
 Se invece si va a considerare la conoscenza presente nel testo libero, si può immaginare che da esso (ovviamente presente in ogni articolo) si possa estrarre informazione non presente nel KG poiché riporta una serie di informazioni che probabilmente non sono presenti nell'infobox, ad esempio riguardanti anche entità che non sono il soggetto dell'articolo.
 
 Il nostro approccio al problema considera pattern del tipo 
-"[entità] frase [entità]", ad esempio: "Ennio Morricone was born in Rome" mette in relazione le due entità "Ennio Morricone" e "Rome" utilizzando la frase "was born in" che descrive, in questo caso, un'istanza della relazione "birthPlace".
+"[entità] frase [entità]", ad esempio: "Ennio Morricone was born in Rome" mette in relazione le due entità \textit{Ennio Morricone} e \textit{Rome} utilizzando la frase "was born in" che descrive, in questo caso, un'istanza della relazione \textit{birthPlace}.
 
 In questo articolo descriviamo l'approccio di estrazione di conoscenza da testo libero di Wikipedia, e i risultati in termini di aumento dei fatti presenti in DBpedia.
 
-Per l'estrazione abbiamo generato dal dump in input, un insieme di frasi in cui le entità erano già state riconosciute, triple candidate a rappresentare informazione valida, verificando successivamente se la frase della tripla candidata potesse o meno esprimere una relazione.
-(discuss sommaria spiegazione del processo e qualche numero di risultati)
+Per l'estrazione abbiamo generato dal dump in input, ovvero un insieme di frasi in cui le entità erano già state riconosciute ed etichettate, triple candidate a rappresentare informazione valida, verificando successivamente se la frase della tripla candidata potesse o meno esprimere una relazione. Dopo questa operazione sono state ottenute circa 57 milioni di triple, numero che è stato poi successivamente ridotto di molto, grazie al filtro relazionale fornitoci dal docente.
 
-Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta l'approccio utilizzato per estrarre nuovi fatti; nel Capitolo 4 vengono mostrati i risultati ottenuti; infine, nel Capitolo 5 vengono presentate le conclusioni sul lavoro effettuato; nell'ultimo capitolo si discutono alcuni sviluppi futuri che potrebbero rendere il sistema sviluppato più performante.
+Il resto dell'articolo è organizzato in vari capitoli: nel Capitolo 2 vengono analizzate in maggior dettaglio le risorse utilizzate; nel Capitolo 3 si presenta l'approccio utilizzato per estrarre nuovi fatti; nel Capitolo 4 vengono mostrati i risultati ottenuti insieme ad alcune analisi puntuali su alcune problematiche riscontrate; nel Capitolo 5 vengono presentate le conclusioni sul lavoro effettuato; nell'ultimo capitolo si discutono alcuni sviluppi futuri che potrebbero rendere il sistema sviluppato più performante.
 
 \section{RISORSE}
 \subsection*{\textit{Wikipedia}}
 
-Wikipedia è un'enciclopedia online libera e collaborativa, che attualmente comprende circa 5.3 milioni di articoli nella sua versione inglese. Questa modalità di collaborazione garantisce una grande qualità e affidabilità sulle informazione ed anche una certa omogeneità nell'esprimere determinati concetti che va a facilitare l'estrazione di fatti utilizzando proprio questi pattern ricorrenti.
+Wikipedia è un'enciclopedia online libera e collaborativa, che attualmente comprende circa 5.3 milioni di articoli nella sua versione inglese. Questa modalità di collaborazione garantisce una grande qualità e affidabilità sulle informazioni ed anche una certa omogeneità nell'esprimere determinati concetti che va a facilitare l'estrazione di fatti utilizzando proprio questi pattern ricorrenti.
  
 Ogni articolo in Wikipedia fa riferimento ad una entità principale, che può rappresentare una persona, un luogo, un oggetto, un fatto, ecc..., identificata con un \textit{wiki ID}. Nel testo le informazioni sono codificate in linguaggio naturale, inoltre le entità secondarie eventualmente presenti in un determinato articolo sono rappresentate usando dei \textit{wikilinks}, una sintassi specifica di Wikipedia per evidenziare un particolare concetto e offrire un link all'articolo che lo descrive.
 
-Nel nostro particolare caso le frasi di Wikipedia su cui lavorare ci sono state fornite dal docente già processate dagli strumenti messi a disposizione dall' NLP Group di Stanford, in particolare dallo strumento di Named Entity Recognition, queste erano nella forma di frasi con le entità presenti già etichettate in una particolare formato, ad esempio un frammento di interesse di una frase può essere:
+Nel nostro particolare caso le frasi di Wikipedia su cui lavorare ci sono state fornite dal docente già processate dagli strumenti messi a disposizione dall' NLP Group di Stanford, in particolare dallo strumento di Named Entity Recognition, queste erano nella forma di frasi con le entità presenti già etichettate in un particolare formato, ad esempio un frammento di interesse di una frase può essere:
 
 \begin{itemize}
 	\item entità soggetto: [[Barack\_Obama$|$m.02mjmr]]
@@ -69,11 +71,11 @@ Ogni entità in DBpedia è identificata da un URI del tipo:
 \bigbreak
 \textbf{http://dbpedia.org/resource/Name}
 \bigbreak
-dove "Name" è preso dall'URL del relativo articolo di Wikipedia, che ha la forma:
+dove \textit{Name} è preso dall'URL del relativo articolo di Wikipedia, che ha la forma:
 \bigbreak
 \textbf{http://en.wikipedia.org/wiki/Name}.
 \bigbreak
-In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi e dati accessori, in particolare:
+In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. I dati sono suddivisi in dataset diversi e dati accessori, in particolare nel nostro caso:
 
 \begin{itemize}
 \item dati accessori relativi ai tipi delle entità, ovvero una serie di coppie "URL entità - URL tipo", che associa ad esempio all'entità "Barack Obama" il tipo "OfficeHolder", sottotipo di "Person";
@@ -85,13 +87,15 @@ In questo modo ogni risorsa è legata direttamente ad un articolo di Wikipedia. 
 
 \subsection*{\textit{Lector}}
 
-Per estrarre nuovi fatti ed aumentare il grafo è stato seguito un procedimento simile a quello utilizzato originariamente dall'originale  Lector, un progetto dello stesso tipo svolto dal docente e oggetto di studio da parte nostra. Tuttavia si è scelto di variare leggermente alcune fasi del processo estrattivo, oltre che variare anche alcune scelte relativamente allo scoring delle frasi. Queste modifiche, laddove presenti saranno evidenziate nel seguito della trattazione.
+Per estrarre nuovi fatti ed aumentare il grafo è stato seguito un procedimento simile a quello utilizzato originariamente dalla prima versione di Lector, un progetto analogo svolto dal docente e oggetto di studio da parte nostra. Tuttavia si è scelto di variare leggermente alcune fasi del processo estrattivo, oltre che variare anche alcune scelte relativamente allo scoring delle frasi. 
+Sebbene il processo estrattivo di Lector si sia rivelato robusto e preciso, lo scopo del nostro progetto è stato anche quello di variare alcuni parametri e alcune modalità di estrazione tanto a scopo esplorativo quanto a scopo sperimentale, includendo anche la possibilità di un peggioramento delle prestazioni rispetto al progetto originale.
+Queste modifiche laddove presenti saranno evidenziate nel seguito della trattazione.
 
 \section{APPROCCIO}
 
 Il dataset iniziale di frasi, come detto precedentemente, ci è stato fornito con le entità etichettate. Inizialmente si è provato ad applicare un approccio basato su euristiche per il riconoscimento di frasi di tipo lista, basato sia su il lavoro svolto dal gruppo di NLP di Stanford sia su un lavoro precedentemente svolto da alcuni colleghi. Questo approccio purtroppo si è rivelato non scalabile su una quantità di frasi come quella a disposizione. 
 
-Si è passati poi ad un approccio basato solamente su semplici euristiche, come ad esempio il controllo dei tipi delle entità candidate ad essere quelle nella lista, il controllo molto semplice richiedeva che tutte le entità nella lista fossero dello stesso tipo, questa è solo un'esempio delle euristiche applicate. Questo approccio si è rivelato efficiente ma non preciso, la quantità di informazione estratta risultava essere poco rilevante rispetto alla mole delle frasi, ulteriori analisi hanno rivelato inoltre che purtroppo questa informazione era quasi sempre non corretta (e.g. l'entità primaria legata alle entità nella lista non erano correlate in nessuna maniera).
+Si è passati poi ad un approccio basato solamente su semplici euristiche, come ad esempio il controllo dei tipi delle entità candidate ad essere quelle nella lista, il controllo molto semplice richiedeva che tutte le entità nella lista fossero dello stesso tipo, oppure la verifica di pattern ricorrenti all'interno di una frase contenente una lista, come il numero di virgole in relazione al numero delle entità, questo è solo un'esempio delle euristiche applicate. Questo approccio si è rivelato efficiente ma non preciso, la quantità di informazione estratta risultava essere poco rilevante rispetto alla mole delle frasi, ulteriori analisi hanno rivelato inoltre che purtroppo questa informazione era quasi sempre non corretta (e.g. l'entità primaria legata alle entità nella lista non erano correlate in nessuna maniera).
 
 \begin{figure}[h]
 	\includegraphics[width=7.7cm, height=1.2cm]{stanford}
@@ -104,14 +108,14 @@ Il processamento delle frasi fino ad arrivare all'estrazione dei nuovi fatti si 
 \begin{enumerate}
 \item Pulizia delle frasi originali di Wikipedia, con estrazione di triple entità-frase-entità;
 \item Verifica della relazionalità delle frasi che legano due entità;
-\item Etichettatura delle triple "presenti" e "non presenti" nel grafo di DBpedia, eseguito due volte, una per ogni grafo;
+\item Etichettatura delle triple "presenti" e "non presenti" nel grafo di DBpedia, eseguita due volte, una per ogni grafo;
 \item Scoring delle frasi ottenute dal passo precedente;
 \item Estrazione dei nuovi fatti, eseguita per entrambi i grafi in modo indipendente.
 \end{enumerate}
 
 \subsection{Pulizia delle frasi originali}
 
-Il dump iniziale delle frasi ci è stato fornito dal docente con le entità delimitate da doppie parentesi quadre e arricchite con l'id relativo su \textit{Freebase}, superfluo per questo lavoro. Il dato all'interno di esse ci fornisce il \textit{wiki ID} che è stato utile per reperire l'entità sul grafo di DBpedia, che usa proprio questi identificatori per denotare i nodi. In alcuni casi questi identificatori fanno riferimento ad un \textit{redirect} che punta all'effettivo \textit{wiki ID} che abbiamo reperito tramite una mappatura offerta dal docente, successivamente abbiamo provveduto a sostituire i \textit{redirect} con l'effettivo \textit{wiki ID}.
+Il dump iniziale delle frasi ci è stato fornito dal docente con le entità delimitate da doppie parentesi quadre e arricchite con l'id relativo su \textit{Freebase}, superfluo per questo lavoro. Il dato all'interno di esse ci fornisce il \textit{wiki ID} che è stato utile per reperire l'entità sul grafo di DBpedia, che usa proprio questi identificatori per denotare i nodi. In alcuni casi questi identificatori fanno riferimento ad un \textit{redirect} che punta all'effettivo \textit{wiki ID} reperito tramite una mappatura offerta dal docente, successivamente abbiamo provveduto a sostituire i \textit{redirect} con l'effettivo \textit{wiki ID}.
 
 Abbiamo quindi suddiviso le frasi iniziali in una lista di triple comprendenti tutte le coppie di entità e il testo compreso tra esse, le triple sono state prese in maniera sequenziale, ad esempio se in una frase comparivano 5 entità, le triple sono state estratte nel seguente modo: \textit{ent1-frase1-ent2}, \textit{ent2-frase2-ent3}, ecc.
 
@@ -148,8 +152,8 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 	\begin{tabular}{lllll}
 		tipo di grafo utilizzato    & \textit{\#fatti presenti} & \textit{\#nuovi fatti estratti} &  &  \\
 		\hline
-		grafo con fatti "trusted"   & 14,913,819                & 933,484                         &  &  \\
-		grafo con fatti "untrusted" & 11,478,361                & 1,309,598                       &  &  \\
+		grafo con fatti "trusted"   & 14,913,819                & 921,559                         &  &  \\
+		grafo con fatti "untrusted" & 11,478,361                & 1,201,154                       &  &  \\
 		&                           &                                 &  & 
 	\end{tabular}
 		\caption{Estrazione dei nuovi fatti in relazione ai fatti già esistenti}
@@ -179,7 +183,7 @@ Un'altra differenza con lo score originale è la rimozione del logaritmo del "co
 		party                & 81,526               & 3,486                    & 3,614                      & 3,421        & 65         & 95,3\%    
 		\end{tabular}
 	\end{minipage}
-	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni. \newline Legenda: \textit{\#"trusted"} si riferisce al numero di fatti "trusted" già presenti nel corrispondente grafo; \#n.\textit{"trusted"} si riferisce al numero di nuovi fatti estratti a partire dal grafo \textit{"trusted"}; \#n.\textit{"untrusted"} si riferisce al numero di nuovi fatti estratti a partire dal grafo \textit{"untrusted"}; \#n. comuni si riferisce al numero di nuovi fatti comuni ai due insiemi precedenti; \#eval. si riferisce al numero di fatti valutati (presi randomicamente all'interno della relazione).}
+	\caption{Dati relativi alle 12 relazioni di interesse in Lector originale, i fatti valutati sono stati presi eliminando dai nuovi fatti "trusted" i nuovi fatti comuni. \newline Legenda: \textit{\#"trusted"} è il numero di fatti "trusted" già presenti nel corrispondente grafo; \#n.\textit{"trusted"} è il numero di nuovi fatti estratti a partire dal grafo \textit{"trusted"}; \#n.\textit{"untrusted"} è il numero di nuovi fatti estratti a partire dal grafo \textit{"untrusted"}; \#n. comuni è il numero di nuovi fatti comuni ai due insiemi precedenti; \#eval. è il numero di fatti valutati (presi randomicamente all'interno della relazione).}
 	\label{dati}
 \end{table*}
 
@@ -189,19 +193,19 @@ A questo punto del procedimento si è reso necessario controllare i tipi delle e
 
 Oltre a tipi offerti dalle entità è stato necessario controllare e modificare anche i tipi richiesti dalle relazioni. Molte delle relazioni in DBpedia richiedono che il soggetto e l'oggetto rispettino particolari tipi (e.g la relazione \textit{birthPlace} richiede che il soggetto sia un \textit{Person} mentre l'oggetto sia un \textit{Place}), per ogni relazione si è preso il \textit{domain} della relazione, ovvero il tipo richiesto al soggetto, e il \textit{range}, ovvero il tipo richiesto all'oggetto, e si sono associati alla relazione. Qualora uno dei due non fosse stato definito, il tipo scelto per l'associazione è stato \textit{Thing}. Questa scelta è stata fatta in seguito ad una serie di test, nello schema fornitoci, laddove non ci fosse stato il tipo del \textit{domain} e/o \textit{range}: un'analisi sul portale di DBpedia ha rivelato che il tipo associato al campo mancante era sempre \textit{Thing}, ovvero la radice dei tipi.
 
-Lo stesso discorso è stato applicato per le relazioni che non hanno né \textit{domain} né \textit{range} specificato, che sono: \textit{religion, authority, builder, category, cpu, currency, division, format, gender, hasVariant, honours, influenced, influencedBy, isPartOf, jurisdiction, localAuthority, mainInterest, management, namedAfter, operatedBy, picture, position, predecessor, related, series, similar, source, sportGoverningBody, successor} e \textit{webcast}. Per queste relazioni sia \textit{domain} che \textit{range} sono stati fissati a \textit{Thing}: questa scelta avrebbe potuto portare ad estrarre fatti errati poiché a questo punto non c'è nessuna limitazione sul tipo delle entità legate da una delle suddette relazioni, tuttavia un'analisi svolta sulla relazione \textit{religion} ha dimostrato che la precisione anche senza vincolo dei tipi richiesti risulta essere molto alta. 
+Lo stesso discorso è stato applicato per le relazioni che non hanno né \textit{domain} né \textit{range} specificato, che sono: \textit{religion, authority, builder, category, cpu, currency, division, format, gender, hasVariant, honours, influenced, influencedBy, isPartOf, jurisdiction, localAuthority, mainInterest, management, namedAfter, operatedBy, picture, position, predecessor, related, series, similar, source, sportGoverningBody, successor} e \textit{webcast}. Per queste relazioni sia \textit{domain} che \textit{range} sono stati fissati a \textit{Thing}: questa scelta avrebbe potuto portare ad estrarre fatti errati poiché a questo punto non c'è nessuna limitazione sul tipo delle entità legate da una delle suddette relazioni, tuttavia un'analisi svolta sulla relazione \textit{religion} ha dimostrato che la precisione anche senza vincolo dei tipi richiesti risulta essere sufficientemente alta. 
 
 Da notare che grazie al passaggio precedente eseguito sulle entità è possibile che il test del tipo richiesto da una relazione passi, nel caso in cui l'entità su cui si esegue il test offra un sottotipo di quello richiesto (se è offerto \textit{Scientist} e viene richiesto \textit{Person} allora il test passa), ma fallisca nel caso in cui l'entità su cui si esegue il test offra solamente un supertipo di quello richiesto (se è offerto \textit{Person} e viene richiesto \textit{Scientist} il test fallisce), questo è ottenuto senza ulteriori modifiche a \textit{domain} e/o \textit{range} delle relazioni.
 
-Alla luce di quanto detto precedentemente, nella fase di estrazione un nuovo fatto viene estratto se la frase che lega le due entità della tripla è presente nelle \textit{top-K} frasi di una delle relazioni in esame e se i tipi dell'oggetto e del soggetto sono compatibili con quelli richiesti dalla relazione associata alla frase del passo precedente.  
+Alla luce di quanto detto precedentemente, nella fase di estrazione un nuovo fatto viene estratto se la frase che lega le due entità della tripla è presente nelle \textit{top-K} frasi di una delle relazioni in esame e se i tipi dell'oggetto e del soggetto sono compatibili con quelli richiesti dalla relazione associata alla frase nel passo precedente.  
 
 
 \section{VALUTAZIONE}
 
-Come possiamo vedere dalla tabella in \ref{nuovi-vecchi} il numero dei fatti nuovi estratti a partire dal grafo considerato meno affidabile è superiore a quello relativo al numero dei nuovi fatti estratti a partire dal grafo più affidabile. Questo è dovuto ad una serie di fattori: ad esempio alcune relazioni del grafo "non fidato" sono assimilabili a una relazione del grafo "fidato", dunque è possibile utilizzare un numero maggiore di \textit{top-K} per estrarre ulteriori fatti.
+Come possiamo vedere dalla tabella in \ref{nuovi-vecchi} il numero dei nuovi fatti estratti a partire dal grafo considerato meno affidabile è superiore a quello relativo al numero dei nuovi fatti estratti a partire dal grafo più affidabile. Questo è dovuto ad una serie di fattori: ad esempio alcune relazioni del grafo "non fidato" sono assimilabili a una relazione del grafo "fidato", dunque è possibile utilizzare un numero maggiore di \textit{top-K} per estrarre ulteriori fatti.
 
-I 490.503 fatti comuni ai due insiemi di nuovi fatti sono stati utilizzati per filtrare i nuovi fatti estratti a partire dal grafo fidato. Per la valutazione dunque ci siamo concentrati sulle dodici relazioni analizzate originariamente da Lector, ovvero:
-\textit{birthPlace, deathPlace, nationality, team, almaMater, spouse, parent, child, ethnicity, religion, award, party} e sul particolare insieme appena definito. Il numero di fatti filtrati è dunque 431.056 e su questi si è concentrata la nostra analisi.
+I 490.503 fatti comuni ai due insiemi di nuovi fatti sono stati utilizzati per filtrare i nuovi fatti estratti a partire dal grafo fidato, ottenendo i nuovi fatti esclusivi dell'estrazione basata sul grafo fidato, il numero di fatti filtrati è dunque 431.056. Per la valutazione successivamente ci siamo concentrati sulle dodici relazioni analizzate originariamente da Lector, ovvero:
+\textit{birthPlace, deathPlace, nationality, team, almaMater, spouse, parent, child, ethnicity, religion, award, party} e sul particolare insieme appena definito.
 
 \subsection{\textit{religion}}
 
@@ -235,6 +239,6 @@ In un futuro si potrebbero svolgere varie attività utili al miglioramento del p
 
 Un'altra attività che si può svolgere è l'unione dei due dataset iniziali, ovvero del grafo "trusted" e del grafo "untrusted", nella fase di estrazione e di valutazione: è stato visto che i fatti nel grafo "untrusted" sono sicuramente di qualità inferiore ma non così inferiori come si è pensato quando sono stati svolti i primi passi nella realizzazione del sistema. Questo potrebbe portare ad un aumento del numero dei nuovi fatti, al costo di un abbassamento della precisione di questi ultimi che potrebbe risultare irrisorio, in alcuni casi quindi questa unione può essere vantaggiosa.\footnote{Vedi \ref{deathPlace}}
 
-Un'ultima riflessione che è possibile fare riguarda l'eterogeneità delle relazioni presenti nel grafo "untrusted": questo infatti ospita una moltitudine di relazioni o \textit{properties}, che si possono spesso riunire in gruppi di 2-3 elementi ed assimilare ad una relazione particolare delle relazioni "trusted"; ad esempio le \textit{properties} \textit{placeOfBirth} e \textit{birthPlace} possono essere assimilate entrambe alla stessa relazione "trusted", ovvero \textit{ontology/birthPlace}. L'assimilazione permetterebbe di ottenere più fatti "untrusted" nuovi, cosa che permette di filtrare con maggiore qualità i nuovi fatti "trusted". Tuttavia come abbiamo illustrato prima questo filtraggio può anche portare ad un abbassamento drastico della precisione dei nuovi fatti, come visto ad esempio nella relazione \textit{birthPlace}.
+Un'ultima riflessione che è possibile fare riguarda l'eterogeneità delle relazioni presenti nel grafo "untrusted": questo infatti ospita una moltitudine di relazioni o \textit{properties}, che si possono spesso riunire in gruppi di 2-3 elementi ed assimilare ad una relazione particolare delle relazioni "trusted"; ad esempio le \textit{properties} \textit{placeOfBirth} e \textit{birthPlace} possono essere assimilate entrambe alla stessa relazione "trusted", ovvero \textit{ontology/birthPlace}. L'assimilazione permetterebbe di ottenere più fatti "untrusted" nuovi per singola relazione, cosa che permette di filtrare con maggiore qualità i nuovi fatti "trusted". Tuttavia come abbiamo illustrato prima questo filtraggio può anche portare ad un abbassamento drastico della precisione dei nuovi fatti, come visto ad esempio nella relazione \textit{deathPlace}.
 
 \end{document}
